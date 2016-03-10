@@ -1,0 +1,561 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Apache Flink 1.1-SNAPSHOT 中文文档: 多元线性回归</title>
+    <link rel="shortcut icon" href="/page/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/page/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/page/css/flink.css">
+    <link rel="stylesheet" href="/page/css/syntax.css">
+    <link rel="stylesheet" href="/page/css/codetabs.css">
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [['$','$'], ['\\(','\\)']] },
+        TeX: {
+          equationNumbers: { autoNumber: "AMS" } }
+        });
+    </script>
+    <script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    
+
+
+
+
+
+    <!-- Top navbar. -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- The logo. -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-logo">
+            <a href="http://flink.apache.org"><img alt="Apache Flink" src="/page/img/navbar-brand-logo.jpg"></a>
+          </div>
+        </div><!-- /.navbar-header -->
+
+        <!-- The navigation links. -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="hidden-sm "><a href="/">中文文档 1.1</a></li>
+
+            <li class="hidden-sm "><a href="/features.html">特性</a></li>
+
+            <!-- Quickstart -->
+            <li class="dropdown">
+              <a href="/quickstart" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">快速起步<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/quickstart/setup_quickstart.html">安装</a></li>
+                
+                <li class=""><a href="/quickstart/run_example_quickstart.html">运行实例</a></li>
+                
+                <li class=""><a href="/quickstart/java_api_quickstart.html">Java API</a></li>
+                
+                <li class=""><a href="/quickstart/scala_api_quickstart.html">Scala API</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Setup -->
+            <li class="dropdown">
+              <a href="/setup" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">安装 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/setup/building.html">Build Flink from Source</a></li>
+                
+                <li class=""><a href="/setup/config.html">Configuration</a></li>
+                
+
+                <li class="divider"></li>
+                <li role="presentation" class="dropdown-header"><strong>部署</strong></li>
+                
+                
+                <li class=""><a href="/setup/local_setup.html">本地</a></li>
+                
+                <li class=""><a href="/setup/cluster_setup.html">集群 (Standalone)</a></li>
+                
+                <li class=""><a href="/setup/yarn_setup.html">YARN</a></li>
+                
+                <li class=""><a href="/setup/gce_setup.html">Google Compute Engine</a></li>
+                
+                <li class=""><a href="/setup/jobmanager_high_availability.html">High Availability</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Programming Guides -->
+            <li class="dropdown">
+              <a href="/apis" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">编程指南 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/apis/common/"><strong>基本概念</strong></a></li>
+                
+                <li class=""><a href="/apis/streaming/"><strong>Streaming 指南</strong> (DataStream API)</a></li>
+                
+                <li class="active"><a href="/apis/batch/"><strong>Batch Guide</strong> (DataSet API)</a></li>
+                
+                <li class=""><a href="/apis/best_practices.html">Best Practices</a></li>
+                
+                <li class=""><a href="/apis/cli.html">Command-Line Interface</a></li>
+                
+                <li class=""><a href="/apis/local_execution.html">Local Execution</a></li>
+                
+                <li class=""><a href="/apis/cluster_execution.html">Cluster Execution</a></li>
+                
+                <li class=""><a href="/apis/scala_shell.html">Scala Shell</a></li>
+                
+                <li class=""><a href="/apis/java8.html">Java 8</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Libraries -->
+            <li class="dropdown active">
+              <a href="/libs" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">类库 <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  
+                  
+                  <li class=""><a href="/apis/batch/libs/gelly.html">Graphs: Gelly</a></li>
+                  
+                  <li class=""><a href="/apis/streaming/libs/cep.html">CEP</a></li>
+                  
+                  <li class="active"><a href="/apis/batch/libs/ml/">Machine Learning</a></li>
+                  
+                  <li class=""><a href="/apis/batch/libs/table.html">Relational: Table</a></li>
+                  
+              </ul>
+            </li>
+
+            <!-- Internals -->
+            <li class="dropdown">
+              <a href="/internals" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">内部 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li role="presentation" class="dropdown-header"><strong>Contribute</strong></li>
+                <li><a href="http://flink.apache.org/how-to-contribute.html"><small><span class="glyphicon glyphicon-new-window"></span></small> How to Contribute</a></li>
+                <li><a href="http://flink.apache.org/contribute-code.html#coding-guidelines"><small><span class="glyphicon glyphicon-new-window"></span></small> Coding Guidelines</a></li>
+                
+                
+                <li class=""><a href="/internals/ide_setup.html">IDE Setup</a></li>
+                
+                <li class=""><a href="/internals/logging.html">Logging</a></li>
+                
+                <li class=""><a href="/internals/general_arch.html">Architecture and Process Model</a></li>
+                
+                <li class=""><a href="/internals/stream_checkpointing.html">Fault Tolerance for Data Streaming</a></li>
+                
+                <li class=""><a href="/internals/types_serialization.html">Type Extraction and Serialization</a></li>
+                
+                <li class=""><a href="/internals/monitoring_rest_api.html">Monitoring REST API</a></li>
+                
+                <li class=""><a href="/internals/job_scheduling.html">Jobs and Scheduling</a></li>
+                
+                <li class=""><a href="/internals/add_operator.html">How-To: Add an Operator</a></li>
+                
+              </ul>
+            </li>
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a class="hidden-sm" href="http://blog.flink-china.org" target="_blank">
+            <small><span class="glyphicon glyphicon-new-window"></span></small> 博客</a></li>
+            <li class="hidden-sm "><a href="/about/">关于本站</a></li>
+          </ul>
+          <form class="navbar-form navbar-right hidden-sm hidden-md" role="search" action="/search-results.html">
+            <div class="form-group">
+              <input type="text" class="form-control" size="16px" name="q" placeholder="Search all pages">
+            </div>
+            <button type="submit" class="btn btn-default">搜索</button>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
+
+
+    
+    
+
+<!--Some of the Latex math notation has been adapted from Apache Spark MLlib's documentation-->
+$$
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\y}{\mathbf{y}}
+\newcommand{\wv}{\mathbf{w}}
+\newcommand{\av}{\mathbf{\alpha}}
+\newcommand{\bv}{\mathbf{b}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\id}{\mathbf{I}}
+\newcommand{\ind}{\mathbf{1}}
+\newcommand{\0}{\mathbf{0}}
+\newcommand{\unit}{\mathbf{e}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\zero}{\mathbf{0}}
+\newcommand\rfrac[2]{^{#1}\!/_{#2}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+$$
+    
+
+    <!-- Main content. -->
+    <div class="container">
+      
+      
+<div class="row">
+
+
+  <!-- Sub Navigation -->
+  <div class="col-sm-3">
+    <ul id="sub-nav">
+      
+      
+      
+        
+        <li><a href="/apis/batch/" class="active">DataSet API</a>
+          
+          <ul>
+            
+              <li><a href="/apis/batch/dataset_transformations.html" class="">Transformations</a></li>
+            
+              <li><a href="/apis/batch/zip_elements_guide.html" class="">Zipping Elements</a></li>
+            
+          </ul>
+          
+        </li>
+      
+        
+        <li><a href="/apis/batch/fault_tolerance.html" class="">Fault Tolerance</a>
+          
+        </li>
+      
+        
+        <li><a href="/apis/batch/iterations.html" class="">Iterations</a>
+          
+        </li>
+      
+        
+        <li><a href="/apis/batch/connectors.html" class="">Connectors</a>
+          
+        </li>
+      
+        
+        <li><a href="/apis/batch/python.html" class="">Python API</a>
+          
+        </li>
+      
+        
+        <li><a href="/apis/batch/examples.html" class="">Examples</a>
+          
+        </li>
+      
+        
+        <li><a href="/apis/batch/libs/" class="active">Libraries</a>
+          
+          <ul>
+            
+              <li><a href="/apis/batch/libs/gelly.html" class="">Gelly</a></li>
+            
+              <li><a href="/apis/batch/libs/ml/" class="active">Machine Learning</a></li>
+            
+              <li><a href="/apis/batch/libs/table.html" class="">Table</a></li>
+            
+          </ul>
+          
+        </li>
+      
+        
+        <li><a href="/apis/batch/hadoop_compatibility.html" class="">Hadoop Compatibility</a>
+          
+        </li>
+      
+    </ul>
+  </div>
+  <!-- Main -->
+  <div class="col-sm-9">
+    <!-- Top anchor -->
+    <a href="#top"></a>
+
+    <!-- Artifact name change warning. Remove for the 1.0 release. -->
+    
+    <div class="panel panel-default">
+      <div class="panel-body"><strong>重要</strong>: 依赖于Scala的maven artifacts现在会添加一个Scala主版本的后缀，例如 "2.10" 或 "2.11". 请查阅<a href="https://cwiki.apache.org/confluence/display/FLINK/Maven+artifact+names+suffixed+with+Scala+version">迁移指南</a>.</div>
+    </div>
+    
+
+    <!-- Breadcrumbs above the main heading -->
+    <ol class="breadcrumb">
+      
+      
+      <li><a href="/apis/batch/">Batch Guide</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+
+      
+      
+
+      
+      <li><a href="/apis/batch/libs/">Libraries</a></li>
+      
+
+      
+
+      <li><a href="/apis/batch/libs/ml/">Machine Learning</a></li>
+      
+      
+      <li class="active">多元线性回归</li>
+    </ol>
+
+    <div class="text">
+      <!-- Main heading -->
+      <h1>多元线性回归</h1>
+
+      <!-- Content -->
+      
+
+<ul id="markdown-toc">
+  <li><a href="#section" id="markdown-toc-section">描述</a></li>
+  <li><a href="#section-1" id="markdown-toc-section-1">操作</a>    <ul>
+      <li><a href="#section-2" id="markdown-toc-section-2">训练</a></li>
+      <li><a href="#section-3" id="markdown-toc-section-3">预测</a></li>
+    </ul>
+  </li>
+  <li><a href="#section-4" id="markdown-toc-section-4">参数列表</a></li>
+  <li><a href="#section-5" id="markdown-toc-section-5">示例代码</a></li>
+</ul>
+
+<h2 id="section">描述</h2>
+
+<p>多元线性回归的目标是找到一个最佳拟合输入数据的线性函数。通过输入数据集：$(\mathbf{x}, y)$，
+ 多元线性回归将得到一个向量$\mathbf{w}$，从而最小化残差平方(squared residuals)和：</p>
+
+<script type="math/tex; mode=display">S(\mathbf{w}) = \sum_{i=1} \left(y - \mathbf{w}^T\mathbf{x_i} \right)^2</script>
+
+<p>通过矩阵的表示方法，得到以下公式：
+ <script type="math/tex">\mathbf{w}^* = \arg \min_{\mathbf{w}} (\mathbf{y} - X\mathbf{w})^2</script></p>
+
+<p>从而得到一个确定解：
+  <script type="math/tex">\mathbf{w}^* = \left(X^TX\right)^{-1}X^T\mathbf{y}</script></p>
+
+<p>但是，如果输入数据集过大从而导致无法完全解析所有数据时，可以通过随机梯度下降(SGD)来得到一个近似解。
+ SGD首先用输入数据集的随机子集求得一个梯度，特定点$\mathbf{x}_i$上的梯度为：</p>
+
+<script type="math/tex; mode=display">\nabla_{\mathbf{w}} S(\mathbf{w}, \mathbf{x_i}) = 2\left(\mathbf{w}^T\mathbf{x_i} -
+    y\right)\mathbf{x_i}</script>
+
+<p>求解出来的梯度被归一化，公式为：$\gamma = \frac{s}{\sqrt{j}}$，其中$s$为初始步长，$j$为当前迭代次数。
+ 当前梯度的权重向量减去归一化后的当前梯度值，即得到下一次迭代的权重向量：</p>
+
+<script type="math/tex; mode=display">\mathbf{w}_{t+1} = \mathbf{w}_t - \gamma \frac{1}{n}\sum_{i=1}^n \nabla_{\mathbf{w}} S(\mathbf{w}, \mathbf{x_i})</script>
+
+<p>多元线性回归可以根据输入的SGD迭代次数终止，也可以在达到给定的收敛条件后终止。其中收敛条件为两次迭代之间残差平方和满足：</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\frac{S_{k-1} - S_k}{S_{k-1}} < \rho %]]></script>
+
+<h2 id="section-1">操作</h2>
+
+<p><code>MultipleLinearRegression</code>是<code>Predictor</code>，因此支持训练和预测操作。</p>
+
+<h3 id="section-2">训练</h3>
+
+<p>多元线性回归通过输入一个<code>LabeledVector</code>来进行训练：</p>
+
+<ul>
+  <li><code>fit: DataSet[LabeledVector] =&gt; Unit</code></li>
+</ul>
+
+<h3 id="section-3">预测</h3>
+
+<p>多元线性回归预测所有<code>Vector</code>子类型的回归值：</p>
+
+<ul>
+  <li><code>predict[T &lt;: Vector]: DataSet[T] =&gt; DataSet[LabeledVector]</code></li>
+</ul>
+
+<p>通过<code>DataSet[LabeledVector]</code>来预测，将得到每条数据的回归值，且返回<code>DataSet[(Double, Double)]</code>。
+在每个元组中，第一个元素为对应输入<code>DataSet[LabeledVector]</code>中的真实值，第二个元素为预测值。
+可以通过<code>(truth, prediction)</code>的对比来评估算法的好坏。</p>
+
+<ul>
+  <li><code>predict: DataSet[LabeledVector] =&gt; DataSet[(Double, Double)]</code></li>
+</ul>
+
+<h2 id="section-4">参数列表</h2>
+
+<p>多元线性回归可以通过以下参数来控制：</p>
+
+<table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="text-left" style="width: 20%">参数</th>
+        <th class="text-center">说明</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td><strong>Iterations</strong></td>
+        <td>
+          <p>
+          最大迭代次数(默认值：<strong>10</strong>)
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Stepsize</strong></td>
+        <td>
+          <p>
+          梯度下降的初始步长。该值确定每次进行梯度下降时，反向移动的距离。调整步长对于算法的稳定收敛及性能非常重要。
+            (默认值：<strong>0.1</strong>)
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>ConvergenceThreshold</strong></td>
+        <td>
+          <p>
+          算法停止迭代的残差平方和变化程度的收敛阈值。
+            (默认值：<strong>None</strong>)
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>LearningRateMethod</strong></td>
+        <td>
+            <p>
+            学习率方法，用于计算每次迭代的有效学习率。Flink ML支持的学习率方法列表见：
+                <a href="optimization.html">learning rate methods</a>。
+                (默认值：<strong>LearningRateMethod.Default</strong>)
+            </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+<h2 id="section-5">示例代码</h2>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">// Create multiple linear regression learner</span>
+<span class="k">val</span> <span class="n">mlr</span> <span class="k">=</span> <span class="nc">MultipleLinearRegression</span><span class="o">()</span>
+<span class="o">.</span><span class="n">setIterations</span><span class="o">(</span><span class="mi">10</span><span class="o">)</span>
+<span class="o">.</span><span class="n">setStepsize</span><span class="o">(</span><span class="mf">0.5</span><span class="o">)</span>
+<span class="o">.</span><span class="n">setConvergenceThreshold</span><span class="o">(</span><span class="mf">0.001</span><span class="o">)</span>
+
+<span class="c1">// Obtain training and testing data set</span>
+<span class="k">val</span> <span class="n">trainingDS</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">LabeledVector</span><span class="o">]</span> <span class="k">=</span> <span class="o">...</span>
+<span class="k">val</span> <span class="n">testingDS</span><span class="k">:</span> <span class="kt">DataSet</span><span class="o">[</span><span class="kt">Vector</span><span class="o">]</span> <span class="k">=</span> <span class="o">...</span>
+
+<span class="c1">// Fit the linear model to the provided data</span>
+<span class="n">mlr</span><span class="o">.</span><span class="n">fit</span><span class="o">(</span><span class="n">trainingDS</span><span class="o">)</span>
+
+<span class="c1">// Calculate the predictions for the test data</span>
+<span class="k">val</span> <span class="n">predictions</span> <span class="k">=</span> <span class="n">mlr</span><span class="o">.</span><span class="n">predict</span><span class="o">(</span><span class="n">testingDS</span><span class="o">)</span></code></pre></figure>
+
+
+      <div class="footer">
+      发现错误？想参与编辑？
+      <a href="https://github.com/wuchong/flink-china-doc/edit/master/apis/batch/libs/ml/multiple_linear_regression.md" target="_blank">
+        在 Github 上编辑此页！
+      </a>
+    </div>
+    </div>
+  </div>
+
+  
+</div>
+
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/anchor-js/3.1.0/anchor.min.js"></script>
+    <script src="/page/js/flink.js"></script>
+
+    <!-- Google Analytics -->
+    <!-- script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-52545728-1', 'auto');
+      ga('send', 'pageview');
+    </script -->
+
+    <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?835985ad7943d8c24bc3c1f155b7d4a2";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+
+    <!-- Disqus -->
+    
+  </body>
+</html>

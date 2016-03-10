@@ -1,0 +1,598 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Apache Flink 1.1-SNAPSHOT 中文文档: Features</title>
+    <link rel="shortcut icon" href="/page/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/page/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/page/css/flink.css">
+    <link rel="stylesheet" href="/page/css/syntax.css">
+    <link rel="stylesheet" href="/page/css/codetabs.css">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    
+
+
+
+
+
+    <!-- Top navbar. -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- The logo. -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-logo">
+            <a href="http://flink.apache.org"><img alt="Apache Flink" src="/page/img/navbar-brand-logo.jpg"></a>
+          </div>
+        </div><!-- /.navbar-header -->
+
+        <!-- The navigation links. -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="hidden-sm "><a href="/">中文文档 1.1</a></li>
+
+            <li class="hidden-sm active"><a href="/features.html">特性</a></li>
+
+            <!-- Quickstart -->
+            <li class="dropdown">
+              <a href="/quickstart" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">快速起步<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/quickstart/setup_quickstart.html">安装</a></li>
+                
+                <li class=""><a href="/quickstart/run_example_quickstart.html">运行实例</a></li>
+                
+                <li class=""><a href="/quickstart/java_api_quickstart.html">Java API</a></li>
+                
+                <li class=""><a href="/quickstart/scala_api_quickstart.html">Scala API</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Setup -->
+            <li class="dropdown">
+              <a href="/setup" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">安装 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/setup/building.html">Build Flink from Source</a></li>
+                
+                <li class=""><a href="/setup/config.html">Configuration</a></li>
+                
+
+                <li class="divider"></li>
+                <li role="presentation" class="dropdown-header"><strong>部署</strong></li>
+                
+                
+                <li class=""><a href="/setup/local_setup.html">本地</a></li>
+                
+                <li class=""><a href="/setup/cluster_setup.html">集群 (Standalone)</a></li>
+                
+                <li class=""><a href="/setup/yarn_setup.html">YARN</a></li>
+                
+                <li class=""><a href="/setup/gce_setup.html">Google Compute Engine</a></li>
+                
+                <li class=""><a href="/setup/jobmanager_high_availability.html">High Availability</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Programming Guides -->
+            <li class="dropdown">
+              <a href="/apis" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">编程指南 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/apis/common/"><strong>基本概念</strong></a></li>
+                
+                <li class=""><a href="/apis/streaming/"><strong>Streaming 指南</strong> (DataStream API)</a></li>
+                
+                <li class=""><a href="/apis/batch/"><strong>Batch Guide</strong> (DataSet API)</a></li>
+                
+                <li class=""><a href="/apis/best_practices.html">Best Practices</a></li>
+                
+                <li class=""><a href="/apis/cli.html">Command-Line Interface</a></li>
+                
+                <li class=""><a href="/apis/local_execution.html">Local Execution</a></li>
+                
+                <li class=""><a href="/apis/cluster_execution.html">Cluster Execution</a></li>
+                
+                <li class=""><a href="/apis/scala_shell.html">Scala Shell</a></li>
+                
+                <li class=""><a href="/apis/java8.html">Java 8</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Libraries -->
+            <li class="dropdown">
+              <a href="/libs" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">类库 <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  
+                  
+                  <li class=""><a href="/apis/batch/libs/gelly.html">Graphs: Gelly</a></li>
+                  
+                  <li class=""><a href="/apis/streaming/libs/cep.html">CEP</a></li>
+                  
+                  <li class=""><a href="/apis/batch/libs/ml/">Machine Learning</a></li>
+                  
+                  <li class=""><a href="/apis/batch/libs/table.html">Relational: Table</a></li>
+                  
+              </ul>
+            </li>
+
+            <!-- Internals -->
+            <li class="dropdown">
+              <a href="/internals" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">内部 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li role="presentation" class="dropdown-header"><strong>Contribute</strong></li>
+                <li><a href="http://flink.apache.org/how-to-contribute.html"><small><span class="glyphicon glyphicon-new-window"></span></small> How to Contribute</a></li>
+                <li><a href="http://flink.apache.org/contribute-code.html#coding-guidelines"><small><span class="glyphicon glyphicon-new-window"></span></small> Coding Guidelines</a></li>
+                
+                
+                <li class=""><a href="/internals/ide_setup.html">IDE Setup</a></li>
+                
+                <li class=""><a href="/internals/logging.html">Logging</a></li>
+                
+                <li class=""><a href="/internals/general_arch.html">Architecture and Process Model</a></li>
+                
+                <li class=""><a href="/internals/stream_checkpointing.html">Fault Tolerance for Data Streaming</a></li>
+                
+                <li class=""><a href="/internals/types_serialization.html">Type Extraction and Serialization</a></li>
+                
+                <li class=""><a href="/internals/monitoring_rest_api.html">Monitoring REST API</a></li>
+                
+                <li class=""><a href="/internals/job_scheduling.html">Jobs and Scheduling</a></li>
+                
+                <li class=""><a href="/internals/add_operator.html">How-To: Add an Operator</a></li>
+                
+              </ul>
+            </li>
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a class="hidden-sm" href="http://blog.flink-china.org" target="_blank">
+            <small><span class="glyphicon glyphicon-new-window"></span></small> 博客</a></li>
+            <li class="hidden-sm "><a href="/about/">关于本站</a></li>
+          </ul>
+          <form class="navbar-form navbar-right hidden-sm hidden-md" role="search" action="/search-results.html">
+            <div class="form-group">
+              <input type="text" class="form-control" size="16px" name="q" placeholder="Search all pages">
+            </div>
+            <button type="submit" class="btn btn-default">搜索</button>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
+
+
+    
+
+    <!-- Main content. -->
+    <div class="container">
+      
+      
+<div class="row">
+
+  
+  
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1">
+          <!-- --------------------------------------------- -->
+<!--                Streaming
+<!-- --------------------------------------------- -->
+
+<hr />
+
+<div class="row" style="padding: 0 0 0 0">
+  <div class="col-sm-12" style="text-align: center;">
+    <h1 id="streaming"><b>Streaming</b></h1>
+  </div>
+</div>
+
+<hr />
+
+<!-- High Performance -->
+<div class="row" style="padding: 0 0 2em 0">
+  <div class="col-sm-12">
+    <h1 id="performance"><i>高吞吐 &amp; 低延迟</i></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <p class="lead">Flink 的流处理引擎只需要很少配置就能实现高吞吐率和低延迟。下图展示了一个分布式计数的任务的性能，包括了流数据 shuffle 过程。</p>
+  </div>
+</div>
+<div class="row" style="padding: 0 0 2em 0">
+  <div class="col-sm-12 img-column">
+    <img src="/fig/features/streaming_performance.png" alt="Performance of data streaming applications" style="width:75%" />
+  </div>
+</div>
+
+<hr />
+
+<!-- Event Time Streaming -->
+<div class="row" style="padding: 0 0 2em 0">
+  <div class="col-sm-12">
+    <h1 id="event_time"><i>支持 Event Time 和乱序事件</i></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <p class="lead">Flink 支持了流处理和 <b>Event Time</b> 语义的窗口机制。</p>
+    <p class="lead">Event time 使得计算乱序到达的事件或可能延迟到达的事件更加简单。</p>
+  </div>
+  <div class="col-sm-6 img-column">
+    <img src="/fig/features/out_of_order_stream.png" alt="Event Time and Out-of-Order Streams" style="width:100%" />
+  </div>
+</div>
+
+<hr />
+
+<!-- Exactly-once Semantics -->
+<div class="row" style="padding: 0 0 2em 0">
+  <div class="col-sm-12">
+    <h1 id="exactly_once"><i>状态计算的 exactly-once 语义</i></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <p class="lead">流程序可以在计算过程中维护自定义状态。</p>
+    <p class="lead">Flink 的 checkpointing 机制保证了即时在故障发生下也能保障状态的 <i>exactly once</i> 语义。</p>
+  </div>
+  <div class="col-sm-6 img-column">
+    <img src="/fig/features/exactly_once_state.png" alt="Exactly-once Semantics for Stateful Computations" style="width:50%" />
+  </div>
+</div>
+
+<hr />
+
+<!-- Windowing -->
+<div class="row" style="padding: 0 0 2em 0">
+  <div class="col-sm-12">
+    <h1 id="windows"><i>高度灵活的流式窗口</i></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <p class="lead">Flink 支持在时间窗口，统计窗口，session 窗口，以及数据驱动的窗口</p>
+    <p class="lead">窗口可以通过灵活的触发条件来定制，以支持复杂的流计算模式。</p>
+  </div>
+  <div class="col-sm-6 img-column">
+    <img src="/fig/features/windows.png" alt="Windows" style="width:100%" />
+  </div>
+</div>
+
+<hr />
+
+<!-- Continuous streaming -->
+<div class="row" style="padding: 0 0 2em 0">
+  <div class="col-sm-12">
+    <h1 id="streaming_model"><i>带反压的连续流模型</i></h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <p class="lead">数据流应用执行的是不间断的（常驻）operators。</p>
+    <p class="lead">Flink streaming 在运行时有着天然的流控：慢的数据 sink 节点会反压（backpressure）快的数据源（sources）。</p>
+  </div>
+  <div class="col-sm-6 img-column">
+    <img src="/fig/features/continuous_streams.png" alt="Continuous Streaming Model" style="width:60%" />
+  </div>
+</div>
+
+<hr />
+
+<!-- Lightweight distributed snapshots -->
+<div class="row" style="padding: 0 0 2em 0">
+  <div class="col-sm-12">
+    <h1 id="snapshots"><i>容错性</i></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <p class="lead">Flink 的容错机制是基于 Chandy-Lamport distributed snapshots 来实现的。</p>
+    <p class="lead">这种机制是非常轻量级的，允许系统拥有高吞吐率的同时还能提供强一致性的保障。</p>
+  </div>
+  <div class="col-sm-6 img-column">
+    <img src="/fig/features/distributed_snapshots.png" alt="Lightweight Distributed Snapshots" style="width:40%" />
+  </div>
+</div>
+
+<hr />
+
+<!-- --------------------------------------------- -->
+<!--                Batch
+<!-- --------------------------------------------- -->
+
+<div class="row" style="padding: 0 0 0 0">
+  <div class="col-sm-12" style="text-align: center;">
+    <h1 id="batch-on-streaming"><b>Batch 和 Streaming 一个系统</b></h1>
+  </div>
+</div>
+
+<hr />
+
+<!-- One Runtime for Streaming and Batch Processing -->
+<div class="row" style="padding: 0 0 2em 0">
+  <div class="col-sm-12">
+    <h1 id="one_runtime"><i>流处理和批处理共用一个引擎</i></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <p class="lead">Flink 为流处理和批处理应用公用一个通用的引擎。</p>
+    <p class="lead">批处理应用可以以一种特殊的流处理应用高效地运行。</p>
+  </div>
+  <div class="col-sm-6 img-column">
+    <img src="/fig/features/one_runtime.png" alt="Unified Runtime for Batch and Stream Data Analysis" style="width:50%" />
+  </div>
+</div>
+
+<hr />
+
+<!-- Memory Management -->
+<div class="row" style="padding: 0 0 2em 0">
+  <div class="col-sm-12">
+    <h1 id="memory_management"><i>内存管理</i></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <p class="lead">Flink 在 JVM 中实现了自己的内存管理。</p>
+    <p class="lead">应用可以超出主内存的大小限制，并且承受更少的垃圾收集的开销。</p>
+  </div>
+  <div class="col-sm-6 img-column">
+    <img src="/fig/features/memory_heap_division.png" alt="Managed JVM Heap" style="width:50%" />
+  </div>
+</div>
+
+<hr />
+
+<!-- Iterations -->
+<div class="row" style="padding: 0 0 2em 0">
+  <div class="col-sm-12">
+    <h1 id="iterations"><i>迭代和增量迭代</i></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <p class="lead">Flink 具有迭代计算的专门支持（比如在机器学习和图计算中）。</p>
+    <p class="lead">增量迭代可以利用依赖计算来更快地收敛。</p>
+  </div>
+  <div class="col-sm-6 img-column">
+    <img src="/fig/features/iterations.png" alt="Performance of iterations and delta iterations" style="width:75%" />
+  </div>
+</div>
+
+<hr />
+
+<!-- Optimizer -->
+<div class="row" style="padding: 0 0 2em 0">
+  <div class="col-sm-12">
+    <h1 id="optimizer"><i>程序调优</i></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <p class="lead">批处理程序会自动地优化一些场景，比如避免一些昂贵的操作（如 shuffles 和 sorts），还有缓存一些中间数据。</p>
+  </div>
+  <div class="col-sm-6 img-column">
+    <img src="/fig/features/optimizer_choice.png" alt="Optimizer choosing between different execution strategies" style="width:100%" />
+  </div>
+</div>
+
+<hr />
+
+<!-- --------------------------------------------- -->
+<!--             APIs and Libraries
+<!-- --------------------------------------------- -->
+
+<div class="row" style="padding: 0 0 0 0">
+  <div class="col-sm-12" style="text-align: center;">
+    <h1 id="apis-and-libs"><b>API 和 类库</b></h1>
+  </div>
+</div>
+
+<hr />
+
+<!-- Data Streaming API -->
+<div class="row" style="padding: 0 0 2em 0">
+  <div class="col-sm-12">
+    <h1 id="streaming_api"><i>流处理应用</i></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-5">
+    <p class="lead"><i>DataStream</i> API 支持了数据流上的函数式转换，可以使用自定义的状态和灵活的窗口。</p>
+    <p class="lead">右侧的示例展示了如何以滑动窗口的方式统计文本数据流中单词出现的次数。</p>
+  </div>
+  <div class="col-sm-7">
+    <p class="lead">WindowWordCount in Flink's DataStream API</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">case</span> <span class="k">class</span> <span class="nc">Word</span><span class="o">(</span><span class="n">word</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">freq</span><span class="k">:</span> <span class="kt">Long</span><span class="o">)</span>
+
+<span class="k">val</span> <span class="n">texts</span><span class="k">:</span> <span class="kt">DataStream</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="o">...</span>
+
+<span class="k">val</span> <span class="n">counts</span> <span class="k">=</span> <span class="n">text</span>
+  <span class="o">.</span><span class="n">flatMap</span> <span class="o">{</span> <span class="n">line</span> <span class="k">=&gt;</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot;\\W+&quot;</span><span class="o">)</span> <span class="o">}</span> 
+  <span class="o">.</span><span class="n">map</span> <span class="o">{</span> <span class="n">token</span> <span class="k">=&gt;</span> <span class="nc">Word</span><span class="o">(</span><span class="n">token</span><span class="o">,</span> <span class="mi">1</span><span class="o">)</span> <span class="o">}</span>
+  <span class="o">.</span><span class="n">keyBy</span><span class="o">(</span><span class="s">&quot;word&quot;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">timeWindow</span><span class="o">(</span><span class="nc">Time</span><span class="o">.</span><span class="n">seconds</span><span class="o">(</span><span class="mi">5</span><span class="o">),</span> <span class="nc">Time</span><span class="o">.</span><span class="n">seconds</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
+  <span class="o">.</span><span class="n">sum</span><span class="o">(</span><span class="s">&quot;freq&quot;</span><span class="o">)</span></code></pre></figure>
+
+  </div>
+</div>
+
+<hr />
+
+<!-- Batch Processing API -->
+<div class="row" style="padding: 0 0 2em 0">
+  <div class="col-sm-12">
+    <h1 id="batch_api"><i>批处理应用</i></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-5">
+    <p class="lead">Flink 的 <i>DataSet</i> API 可以使你用 Java 或 Scala 写出漂亮的、类型安全的、可维护的代码。它支持广泛的数据类型，不仅仅是 key/value 对，以及丰富的 operators。</p>
+    <p class="lead">右侧的示例展示了图计算中 PageRank 算法的一个核心循环。</p>
+  </div>
+  <div class="col-sm-7">
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">case</span> <span class="k">class</span> <span class="nc">Page</span><span class="o">(</span><span class="n">pageId</span><span class="k">:</span> <span class="kt">Long</span><span class="o">,</span> <span class="n">rank</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span>
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Adjacency</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">Long</span><span class="o">,</span> <span class="n">neighbors</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">Long</span><span class="o">])</span>
+
+<span class="k">val</span> <span class="n">result</span> <span class="k">=</span> <span class="n">initialRanks</span><span class="o">.</span><span class="n">iterate</span><span class="o">(</span><span class="mi">30</span><span class="o">)</span> <span class="o">{</span> <span class="n">pages</span> <span class="k">=&gt;</span>
+  <span class="n">pages</span><span class="o">.</span><span class="n">join</span><span class="o">(</span><span class="n">adjacency</span><span class="o">).</span><span class="n">where</span><span class="o">(</span><span class="s">&quot;pageId&quot;</span><span class="o">).</span><span class="n">equalTo</span><span class="o">(</span><span class="s">&quot;pageId&quot;</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="o">(</span><span class="n">page</span><span class="o">,</span> <span class="n">adj</span><span class="o">,</span> <span class="n">out</span> <span class="k">:</span> <span class="kt">Collector</span><span class="o">[</span><span class="kt">Page</span><span class="o">])</span> <span class="k">=&gt;</span> <span class="o">{</span>
+      <span class="n">out</span><span class="o">.</span><span class="n">collect</span><span class="o">(</span><span class="nc">Page</span><span class="o">(</span><span class="n">page</span><span class="o">.</span><span class="n">id</span><span class="o">,</span> <span class="mf">0.15</span> <span class="o">/</span> <span class="n">numPages</span><span class="o">))</span>
+        
+      <span class="k">for</span> <span class="o">(</span><span class="n">n</span> <span class="k">&lt;-</span> <span class="n">adj</span><span class="o">.</span><span class="n">neighbors</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">collect</span><span class="o">(</span><span class="nc">Page</span><span class="o">(</span><span class="n">n</span><span class="o">,</span> <span class="mf">0.85</span><span class="o">*</span><span class="n">page</span><span class="o">.</span><span class="n">rank</span><span class="o">/</span><span class="n">adj</span><span class="o">.</span><span class="n">neighbors</span><span class="o">.</span><span class="n">length</span><span class="o">))</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+  <span class="o">.</span><span class="n">groupBy</span><span class="o">(</span><span class="s">&quot;pageId&quot;</span><span class="o">).</span><span class="n">sum</span><span class="o">(</span><span class="s">&quot;rank&quot;</span><span class="o">)</span>
+<span class="o">}</span></code></pre></figure>
+
+  </div>
+</div>
+
+<hr />
+
+<!-- Library Ecosystem -->
+<div class="row" style="padding: 0 0 2em 0">
+  <div class="col-sm-12">
+    <h1 id="libraries"><i>类库生态</i></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <p class="lead">Flink 栈中提供了提供了很多具有高级 API 和满足不同场景的类库：机器学习、图分析、关系式数据处理。</p>
+    <p class="lead">当前类库还在 <i>beta</i> 状态，并且在大力发展。</p>
+  </div>
+  <div class="col-sm-6 img-column">
+    <img src="/fig/features/stack.png" alt="Flink Stack with Libraries" style="width:60%" />
+  </div>
+</div>
+
+<hr />
+
+<!-- --------------------------------------------- -->
+<!--             Ecosystem
+<!-- --------------------------------------------- -->
+
+<div class="row" style="padding: 0 0 0 0">
+  <div class="col-sm-12" style="text-align: center;">
+    <h1><b>生态系统</b></h1>
+  </div>
+</div>
+
+<hr />
+
+<!-- Ecosystem -->
+<div class="row" style="padding: 0 0 2em 0">
+  <div class="col-sm-12">
+    <h1 id="ecosystem"><i>广泛集成</i></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <p class="lead">Flink 与开源大数据处理生态系统中的许多项目都有集成。</p>
+    <p class="lead">Flink 可以运行在 YARN 上，与 HDFS 协同工作，从 Kafka 中读取流数据，可以执行 Hadoop 程序代码，可以连接多种数据存储系统。</p>
+  </div>
+  <div class="col-sm-6  img-column">
+    <img src="/fig/features/ecosystem_logos.png" alt="Other projects that Flink is integrated with" style="width:75%" />
+  </div>
+</div>
+
+          <div class="footer">
+          发现错误？想参与编辑？
+              <a href="https://github.com/wuchong/flink-china-doc/edit/master/features.md" target="_blank">
+            在 Github 上编辑此页！
+              </a>
+          </div>
+      </div>
+    </div>
+  
+
+  
+</div>
+
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/anchor-js/3.1.0/anchor.min.js"></script>
+    <script src="/page/js/flink.js"></script>
+
+    <!-- Google Analytics -->
+    <!-- script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-52545728-1', 'auto');
+      ga('send', 'pageview');
+    </script -->
+
+    <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?835985ad7943d8c24bc3c1f155b7d4a2";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+
+    <!-- Disqus -->
+    
+  </body>
+</html>

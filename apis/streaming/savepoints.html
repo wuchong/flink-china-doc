@@ -1,0 +1,496 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Apache Flink 1.1-SNAPSHOT 中文文档: Savepoints</title>
+    <link rel="shortcut icon" href="/page/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/page/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/page/css/flink.css">
+    <link rel="stylesheet" href="/page/css/syntax.css">
+    <link rel="stylesheet" href="/page/css/codetabs.css">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    
+
+
+
+
+
+    <!-- Top navbar. -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- The logo. -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-logo">
+            <a href="http://flink.apache.org"><img alt="Apache Flink" src="/page/img/navbar-brand-logo.jpg"></a>
+          </div>
+        </div><!-- /.navbar-header -->
+
+        <!-- The navigation links. -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="hidden-sm "><a href="/">中文文档 1.1</a></li>
+
+            <li class="hidden-sm "><a href="/features.html">特性</a></li>
+
+            <!-- Quickstart -->
+            <li class="dropdown">
+              <a href="/quickstart" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">快速起步<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/quickstart/setup_quickstart.html">安装</a></li>
+                
+                <li class=""><a href="/quickstart/run_example_quickstart.html">运行实例</a></li>
+                
+                <li class=""><a href="/quickstart/java_api_quickstart.html">Java API</a></li>
+                
+                <li class=""><a href="/quickstart/scala_api_quickstart.html">Scala API</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Setup -->
+            <li class="dropdown">
+              <a href="/setup" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">安装 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/setup/building.html">Build Flink from Source</a></li>
+                
+                <li class=""><a href="/setup/config.html">Configuration</a></li>
+                
+
+                <li class="divider"></li>
+                <li role="presentation" class="dropdown-header"><strong>部署</strong></li>
+                
+                
+                <li class=""><a href="/setup/local_setup.html">本地</a></li>
+                
+                <li class=""><a href="/setup/cluster_setup.html">集群 (Standalone)</a></li>
+                
+                <li class=""><a href="/setup/yarn_setup.html">YARN</a></li>
+                
+                <li class=""><a href="/setup/gce_setup.html">Google Compute Engine</a></li>
+                
+                <li class=""><a href="/setup/jobmanager_high_availability.html">High Availability</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Programming Guides -->
+            <li class="dropdown active">
+              <a href="/apis" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">编程指南 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/apis/common/"><strong>基本概念</strong></a></li>
+                
+                <li class="active"><a href="/apis/streaming/"><strong>Streaming 指南</strong> (DataStream API)</a></li>
+                
+                <li class=""><a href="/apis/batch/"><strong>Batch Guide</strong> (DataSet API)</a></li>
+                
+                <li class=""><a href="/apis/best_practices.html">Best Practices</a></li>
+                
+                <li class=""><a href="/apis/cli.html">Command-Line Interface</a></li>
+                
+                <li class=""><a href="/apis/local_execution.html">Local Execution</a></li>
+                
+                <li class=""><a href="/apis/cluster_execution.html">Cluster Execution</a></li>
+                
+                <li class=""><a href="/apis/scala_shell.html">Scala Shell</a></li>
+                
+                <li class=""><a href="/apis/java8.html">Java 8</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Libraries -->
+            <li class="dropdown">
+              <a href="/libs" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">类库 <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  
+                  
+                  <li class=""><a href="/apis/batch/libs/gelly.html">Graphs: Gelly</a></li>
+                  
+                  <li class=""><a href="/apis/streaming/libs/cep.html">CEP</a></li>
+                  
+                  <li class=""><a href="/apis/batch/libs/ml/">Machine Learning</a></li>
+                  
+                  <li class=""><a href="/apis/batch/libs/table.html">Relational: Table</a></li>
+                  
+              </ul>
+            </li>
+
+            <!-- Internals -->
+            <li class="dropdown">
+              <a href="/internals" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">内部 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li role="presentation" class="dropdown-header"><strong>Contribute</strong></li>
+                <li><a href="http://flink.apache.org/how-to-contribute.html"><small><span class="glyphicon glyphicon-new-window"></span></small> How to Contribute</a></li>
+                <li><a href="http://flink.apache.org/contribute-code.html#coding-guidelines"><small><span class="glyphicon glyphicon-new-window"></span></small> Coding Guidelines</a></li>
+                
+                
+                <li class=""><a href="/internals/ide_setup.html">IDE Setup</a></li>
+                
+                <li class=""><a href="/internals/logging.html">Logging</a></li>
+                
+                <li class=""><a href="/internals/general_arch.html">Architecture and Process Model</a></li>
+                
+                <li class=""><a href="/internals/stream_checkpointing.html">Fault Tolerance for Data Streaming</a></li>
+                
+                <li class=""><a href="/internals/types_serialization.html">Type Extraction and Serialization</a></li>
+                
+                <li class=""><a href="/internals/monitoring_rest_api.html">Monitoring REST API</a></li>
+                
+                <li class=""><a href="/internals/job_scheduling.html">Jobs and Scheduling</a></li>
+                
+                <li class=""><a href="/internals/add_operator.html">How-To: Add an Operator</a></li>
+                
+              </ul>
+            </li>
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a class="hidden-sm" href="http://blog.flink-china.org" target="_blank">
+            <small><span class="glyphicon glyphicon-new-window"></span></small> 博客</a></li>
+            <li class="hidden-sm "><a href="/about/">关于本站</a></li>
+          </ul>
+          <form class="navbar-form navbar-right hidden-sm hidden-md" role="search" action="/search-results.html">
+            <div class="form-group">
+              <input type="text" class="form-control" size="16px" name="q" placeholder="Search all pages">
+            </div>
+            <button type="submit" class="btn btn-default">搜索</button>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
+
+
+    
+
+    <!-- Main content. -->
+    <div class="container">
+      
+      
+<div class="row">
+
+
+  <!-- Sub Navigation -->
+  <div class="col-sm-3">
+    <ul id="sub-nav">
+      
+      
+      
+        
+        <li><a href="/apis/streaming/" class="active">DataStream API</a>
+          
+        </li>
+      
+        
+        <li><a href="/apis/streaming/event_time.html" class="">Event Time</a>
+          
+          <ul>
+            
+              <li><a href="/apis/streaming/event_timestamps_watermarks.html" class="">Generating Timestamps / Watermarks</a></li>
+            
+          </ul>
+          
+        </li>
+      
+        
+        <li><a href="/apis/streaming/windows.html" class="">Windows</a>
+          
+          <ul>
+            
+              <li><a href="/apis/streaming/time.html" class="">Working with Time</a></li>
+            
+          </ul>
+          
+        </li>
+      
+        
+        <li><a href="/apis/streaming/fault_tolerance.html" class="">Fault Tolerance</a>
+          
+          <ul>
+            
+              <li><a href="/apis/streaming/state.html" class="">Working with State</a></li>
+            
+              <li><a href="/apis/streaming/state_backends.html" class="">State Backends</a></li>
+            
+          </ul>
+          
+        </li>
+      
+        
+        <li><a href="/apis/streaming/savepoints.html" class="active">Savepoints</a>
+          
+        </li>
+      
+        
+        <li><a href="/apis/streaming/connectors/" class="">Connectors</a>
+          
+          <ul>
+            
+              <li><a href="/apis/streaming/connectors/kafka.html" class="">Kafka</a></li>
+            
+              <li><a href="/apis/streaming/connectors/elasticsearch.html" class="">Elasticsearch</a></li>
+            
+              <li><a href="/apis/streaming/connectors/hdfs.html" class="">HDFS</a></li>
+            
+              <li><a href="/apis/streaming/connectors/rabbitmq.html" class="">RabbitMQ</a></li>
+            
+              <li><a href="/apis/streaming/connectors/twitter.html" class="">Twitter</a></li>
+            
+          </ul>
+          
+        </li>
+      
+        
+        <li><a href="/apis/streaming/libs/" class="">Libraries</a>
+          
+          <ul>
+            
+              <li><a href="/apis/streaming/libs/cep.html" class="">Event Processing (CEP)</a></li>
+            
+          </ul>
+          
+        </li>
+      
+        
+        <li><a href="/apis/streaming/storm_compatibility.html" class="">Storm Compatibility</a>
+          
+        </li>
+      
+    </ul>
+  </div>
+  <!-- Main -->
+  <div class="col-sm-9">
+    <!-- Top anchor -->
+    <a href="#top"></a>
+
+    <!-- Artifact name change warning. Remove for the 1.0 release. -->
+    
+    <div class="panel panel-default">
+      <div class="panel-body"><strong>重要</strong>: 依赖于Scala的maven artifacts现在会添加一个Scala主版本的后缀，例如 "2.10" 或 "2.11". 请查阅<a href="https://cwiki.apache.org/confluence/display/FLINK/Maven+artifact+names+suffixed+with+Scala+version">迁移指南</a>.</div>
+    </div>
+    
+
+    <!-- Breadcrumbs above the main heading -->
+    <ol class="breadcrumb">
+      
+      
+      <li><a href="/apis/streaming/">Streaming 指南</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      <li class="active">Savepoints</li>
+    </ol>
+
+    <div class="text">
+      <!-- Main heading -->
+      <h1>Savepoints</h1>
+
+      <!-- Content -->
+      
+
+<p>Programs written in the <a href="index.html">Data Stream API</a> can resume execution from a <strong>savepoint</strong>. Savepoints allow both updating your programs and your Flink cluster without losing any state. This page covers all steps to trigger, restore, and dispose savepoints. For more details on how Flink handles state and failures, check out the <a href="state_backends.html">State in Streaming Programs</a> and <a href="fault_tolerance.html">Fault Tolerance</a> pages.</p>
+
+<ul id="markdown-toc">
+  <li><a href="#overview" id="markdown-toc-overview">Overview</a></li>
+  <li><a href="#configuration" id="markdown-toc-configuration">Configuration</a>    <ul>
+      <li><a href="#jobmanager" id="markdown-toc-jobmanager">JobManager</a></li>
+      <li><a href="#file-system" id="markdown-toc-file-system">File system</a></li>
+    </ul>
+  </li>
+  <li><a href="#changes-to-your-program" id="markdown-toc-changes-to-your-program">Changes to your program</a></li>
+  <li><a href="#command-line-client" id="markdown-toc-command-line-client">Command-line client</a></li>
+  <li><a href="#current-limitations" id="markdown-toc-current-limitations">Current limitations</a></li>
+</ul>
+
+<h2 id="overview">Overview</h2>
+
+<p>Savepoints are <strong>manually triggered checkpoints</strong>, which take a snapshot of the program and write it out to a state backend. They rely on the regular checkpointing mechanism for this. During execution programs are periodically snapshotted on the worker nodes and produce checkpoints. For recovery only the last completed checkpoint is needed and older checkpoints can be safely discarded as soon as a new one is completed.</p>
+
+<p>Savepoints are similar to these periodic checkpoints except that they are <strong>triggered by the user</strong> and <strong>don’t automatically expire</strong> when newer checkpoints are completed.</p>
+
+<p><img src="fig/savepoints-overview.png" class="center" /></p>
+
+<p>In the above example the workers produce checkpoints <strong>c<sub>1</sub></strong>, <strong>c<sub>2</sub></strong>, <strong>c<sub>3</sub></strong>, and <strong>c<sub>4</sub></strong> for job <em>0xA312Bc</em>. Periodic checkpoints <strong>c<sub>1</sub></strong> and <strong>c<sub>3</sub></strong> have already been <em>discarded</em> and <strong>c<sub>4</sub></strong> is the <em>latest checkpoint</em>. <strong>c<sub>2</sub> is special</strong>. It is the state associated with the savepoint <strong>s<sub>1</sub></strong> and has been triggered by the user and it doesn’t expire automatically (as c<sub>1</sub> and c<sub>3</sub> did after the completion of newer checkpoints).</p>
+
+<p>Note that <strong>s<sub>1</sub></strong> is only a <strong>pointer to the actual checkpoint data c<sub>2</sub></strong>. This means that the actual state is <em>not copied</em> for the savepoint and periodic checkpoint data is kept around.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>Savepoints point to regular checkpoints and store their state in a configured <a href="state_backends.html">state backend</a>. Currently, the supported state backends are <strong>jobmanager</strong> and <strong>filesystem</strong>. The state backend configuration for the regular periodic checkpoints is <strong>independent</strong> of the savepoint state backend configuration. Checkpoint data is <strong>not copied</strong> for savepoints, but points to the configured checkpoint state backend.</p>
+
+<h3 id="jobmanager">JobManager</h3>
+
+<p>This is the <strong>default backend</strong> for savepoints.</p>
+
+<p>Savepoints are stored on the heap of the job manager. They are <em>lost</em> after the job manager is shut down. This mode is only useful if you want to <em>stop</em> and <em>resume</em> your program while the <strong>same cluster</strong> keeps running. It is <em>not recommended</em> for production use. Savepoints are <em>not</em> part of the <a href="/setup/jobmanager_high_availability.html">job manager’s highly available</a> state.</p>
+
+<pre>
+savepoints.state.backend: jobmanager
+</pre>
+
+<p><strong>Note</strong>: If you don’t configure a specific state backend for the savepoints, the jobmanager backend will be used.</p>
+
+<h3 id="file-system">File system</h3>
+
+<p>Savepoints are stored in the configured <strong>file system directory</strong>. They are available between cluster instances and allow to move your program to another cluster.</p>
+
+<pre>
+savepoints.state.backend: filesystem
+savepoints.state.backend.fs.dir: hdfs:///flink/savepoints
+</pre>
+
+<p><strong>Note</strong>: If you don’t configure a specific directory, the job manager backend will be used.</p>
+
+<p><strong>Important</strong>: A savepoint is a pointer to a completed checkpoint. That means that the state of a savepoint is not only found in the savepoint file itself, but also needs the actual checkpoint data (e.g. in a set of further files). Therefore, using the <em>filesystem</em> backend for savepoints and the <em>jobmanager</em> backend for checkpoints does not work, because the required checkpoint data won’t be available after a job manager restart.</p>
+
+<h2 id="changes-to-your-program">Changes to your program</h2>
+
+<p>Savepoints <strong>work out of the box</strong>, but it is <strong>highly recommended</strong> that you slightly adjust your programs in order to be able to work with savepoints in future versions of your program.</p>
+
+<p><img src="fig/savepoints-program_ids.png" class="center" /></p>
+
+<p>For savepoints <strong>only stateful tasks matter</strong>. In the above example, the source and map tasks are stateful whereas the sink is not stateful. Therefore, only the state of the source and map tasks are part of the savepoint.</p>
+
+<p>Each task is identified by its <strong>generated task IDs</strong> and <strong>subtask index</strong>. In the above example the state of the source (<strong>s<sub>1</sub></strong>, <strong>s<sub>2</sub></strong>) and map tasks (<strong>m<sub>1</sub></strong>, <strong>m<sub>2</sub></strong>) is identified by their respective task ID (<em>0xC322EC</em> for the source tasks and <em>0x27B3EF</em> for the map tasks) and subtask index. There is no state for the sinks (<strong>t<sub>1</sub></strong>, <strong>t<sub>2</sub></strong>). Their IDs therefore do not matter.</p>
+
+<p><span class="label label-danger">Important</span> The IDs are generated <strong>deterministically</strong> from your program structure. This means that as long as your program does not change, the IDs do not change. <strong>The only allowed changes are within the user function, e.g. you can change the implemented <code>MapFunction</code> without changing the topology</strong>. In this case, it is straight forward to restore the state from a savepoint by mapping it back to the same task IDs and subtask indexes. This allows you to work with savepoints out of the box, but gets problematic as soon as you make changes to the topology, because they result in changed IDs and the savepoint state cannot be mapped to your program any more.</p>
+
+<p><span class="label label-info">Recommended</span> In order to be able to change your program and <strong>have fixed IDs</strong>, the <em>DataStream</em> API provides a method to manually specify the task IDs. Each operator provides a <strong><code>uid(String)</code></strong> method to override the generated ID. The ID is a String, which will be deterministically hashed to a 16-byte hash value. It is <strong>important</strong> that the specified IDs are <strong>unique per transformation and job</strong>. If this is not the case, job submission will fail.</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nc">DataStream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">stream</span> <span class="k">=</span> <span class="n">env</span><span class="o">.</span>
+  <span class="c1">// Stateful source (e.g. Kafka) with ID</span>
+  <span class="o">.</span><span class="n">addSource</span><span class="o">(</span><span class="k">new</span> <span class="nc">StatefulSource</span><span class="o">())</span>
+  <span class="o">.</span><span class="n">uid</span><span class="o">(</span><span class="s">&quot;source-id&quot;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">shuffle</span><span class="o">()</span>
+  <span class="c1">// The stateful mapper with ID</span>
+  <span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">new</span> <span class="nc">StatefulMapper</span><span class="o">())</span>
+  <span class="o">.</span><span class="n">uid</span><span class="o">(</span><span class="s">&quot;mapper-id&quot;</span><span class="o">)</span>
+
+<span class="c1">// Stateless sink (no specific ID required)</span>
+<span class="n">stream</span><span class="o">.</span><span class="n">print</span><span class="o">()</span></code></pre></figure>
+
+<h2 id="command-line-client">Command-line client</h2>
+
+<p>You control the savepoints via the <a href="/apis/cli.html#savepoints">command line client</a>.</p>
+
+<h2 id="current-limitations">Current limitations</h2>
+
+<ul>
+  <li>
+    <p><strong>Parallelism</strong>: When restoring a savepoint, the parallelism of the program has to match the parallelism of the original program from which the savepoint was drawn. There is no mechanism to re-partition the savepoint’s state yet.</p>
+  </li>
+  <li>
+    <p><strong>Chaining</strong>: Chained operators are identified by the ID of the first task. It’s not possible to manually assign an ID to an intermediate chained task, e.g. in the chain <code>[  a -&gt; b -&gt; c ]</code> only <strong>a</strong> can have its ID assigned manually, but not <strong>b</strong> or <strong>c</strong>. To work around this, you can <a href="index.html#task-chaining-and-resource-groups">manually define the task chains</a>. If you rely on the automatic ID assignment, a change in the chaining behaviour will also change the IDs.</p>
+  </li>
+  <li>
+    <p><strong>Disposing custom state handles</strong>: Disposing an old savepoint does not work with custom state handles (if you are using a custom state backend), because the user code class loader is not available during disposal.</p>
+  </li>
+</ul>
+
+      <div class="footer">
+      发现错误？想参与编辑？
+      <a href="https://github.com/wuchong/flink-china-doc/edit/master/apis/streaming/savepoints.md" target="_blank">
+        在 Github 上编辑此页！
+      </a>
+    </div>
+    </div>
+  </div>
+
+  
+</div>
+
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/anchor-js/3.1.0/anchor.min.js"></script>
+    <script src="/page/js/flink.js"></script>
+
+    <!-- Google Analytics -->
+    <!-- script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-52545728-1', 'auto');
+      ga('send', 'pageview');
+    </script -->
+
+    <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?835985ad7943d8c24bc3c1f155b7d4a2";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+
+    <!-- Disqus -->
+    
+  </body>
+</html>

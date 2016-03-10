@@ -1,0 +1,505 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Apache Flink 1.1-SNAPSHOT 中文文档: JobManager High Availability (HA)</title>
+    <link rel="shortcut icon" href="/page/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/page/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/page/css/flink.css">
+    <link rel="stylesheet" href="/page/css/syntax.css">
+    <link rel="stylesheet" href="/page/css/codetabs.css">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    
+
+
+
+
+
+    <!-- Top navbar. -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- The logo. -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-logo">
+            <a href="http://flink.apache.org"><img alt="Apache Flink" src="/page/img/navbar-brand-logo.jpg"></a>
+          </div>
+        </div><!-- /.navbar-header -->
+
+        <!-- The navigation links. -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="hidden-sm "><a href="/">中文文档 1.1</a></li>
+
+            <li class="hidden-sm "><a href="/features.html">特性</a></li>
+
+            <!-- Quickstart -->
+            <li class="dropdown">
+              <a href="/quickstart" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">快速起步<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/quickstart/setup_quickstart.html">安装</a></li>
+                
+                <li class=""><a href="/quickstart/run_example_quickstart.html">运行实例</a></li>
+                
+                <li class=""><a href="/quickstart/java_api_quickstart.html">Java API</a></li>
+                
+                <li class=""><a href="/quickstart/scala_api_quickstart.html">Scala API</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Setup -->
+            <li class="dropdown active">
+              <a href="/setup" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">安装 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/setup/building.html">Build Flink from Source</a></li>
+                
+                <li class=""><a href="/setup/config.html">Configuration</a></li>
+                
+
+                <li class="divider"></li>
+                <li role="presentation" class="dropdown-header"><strong>部署</strong></li>
+                
+                
+                <li class=""><a href="/setup/local_setup.html">本地</a></li>
+                
+                <li class=""><a href="/setup/cluster_setup.html">集群 (Standalone)</a></li>
+                
+                <li class=""><a href="/setup/yarn_setup.html">YARN</a></li>
+                
+                <li class=""><a href="/setup/gce_setup.html">Google Compute Engine</a></li>
+                
+                <li class="active"><a href="/setup/jobmanager_high_availability.html">High Availability</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Programming Guides -->
+            <li class="dropdown">
+              <a href="/apis" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">编程指南 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/apis/common/"><strong>基本概念</strong></a></li>
+                
+                <li class=""><a href="/apis/streaming/"><strong>Streaming 指南</strong> (DataStream API)</a></li>
+                
+                <li class=""><a href="/apis/batch/"><strong>Batch Guide</strong> (DataSet API)</a></li>
+                
+                <li class=""><a href="/apis/best_practices.html">Best Practices</a></li>
+                
+                <li class=""><a href="/apis/cli.html">Command-Line Interface</a></li>
+                
+                <li class=""><a href="/apis/local_execution.html">Local Execution</a></li>
+                
+                <li class=""><a href="/apis/cluster_execution.html">Cluster Execution</a></li>
+                
+                <li class=""><a href="/apis/scala_shell.html">Scala Shell</a></li>
+                
+                <li class=""><a href="/apis/java8.html">Java 8</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Libraries -->
+            <li class="dropdown">
+              <a href="/libs" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">类库 <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  
+                  
+                  <li class=""><a href="/apis/batch/libs/gelly.html">Graphs: Gelly</a></li>
+                  
+                  <li class=""><a href="/apis/streaming/libs/cep.html">CEP</a></li>
+                  
+                  <li class=""><a href="/apis/batch/libs/ml/">Machine Learning</a></li>
+                  
+                  <li class=""><a href="/apis/batch/libs/table.html">Relational: Table</a></li>
+                  
+              </ul>
+            </li>
+
+            <!-- Internals -->
+            <li class="dropdown">
+              <a href="/internals" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">内部 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li role="presentation" class="dropdown-header"><strong>Contribute</strong></li>
+                <li><a href="http://flink.apache.org/how-to-contribute.html"><small><span class="glyphicon glyphicon-new-window"></span></small> How to Contribute</a></li>
+                <li><a href="http://flink.apache.org/contribute-code.html#coding-guidelines"><small><span class="glyphicon glyphicon-new-window"></span></small> Coding Guidelines</a></li>
+                
+                
+                <li class=""><a href="/internals/ide_setup.html">IDE Setup</a></li>
+                
+                <li class=""><a href="/internals/logging.html">Logging</a></li>
+                
+                <li class=""><a href="/internals/general_arch.html">Architecture and Process Model</a></li>
+                
+                <li class=""><a href="/internals/stream_checkpointing.html">Fault Tolerance for Data Streaming</a></li>
+                
+                <li class=""><a href="/internals/types_serialization.html">Type Extraction and Serialization</a></li>
+                
+                <li class=""><a href="/internals/monitoring_rest_api.html">Monitoring REST API</a></li>
+                
+                <li class=""><a href="/internals/job_scheduling.html">Jobs and Scheduling</a></li>
+                
+                <li class=""><a href="/internals/add_operator.html">How-To: Add an Operator</a></li>
+                
+              </ul>
+            </li>
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a class="hidden-sm" href="http://blog.flink-china.org" target="_blank">
+            <small><span class="glyphicon glyphicon-new-window"></span></small> 博客</a></li>
+            <li class="hidden-sm "><a href="/about/">关于本站</a></li>
+          </ul>
+          <form class="navbar-form navbar-right hidden-sm hidden-md" role="search" action="/search-results.html">
+            <div class="form-group">
+              <input type="text" class="form-control" size="16px" name="q" placeholder="Search all pages">
+            </div>
+            <button type="submit" class="btn btn-default">搜索</button>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
+
+
+    
+
+    <!-- Main content. -->
+    <div class="container">
+      
+      
+<div class="row">
+
+  
+  
+  <div class="col-md-8 col-md-offset-2 text">
+    <!-- Artifact name change warning. Remove for the 1.0 release. -->
+    
+    <div class="panel panel-default">
+      <div class="panel-body"><strong>重要</strong>: 依赖于Scala的maven artifacts现在会添加一个Scala主版本的后缀，例如 "2.10" 或 "2.11". 请查阅<a href="https://cwiki.apache.org/confluence/display/FLINK/Maven+artifact+names+suffixed+with+Scala+version">迁移指南</a>.</div>
+    </div>
+    
+
+    <h1>JobManager High Availability (HA)</h1>
+
+
+<p>The JobManager coordinates every Flink deployment. It is responsible for both <em>scheduling</em> and <em>resource management</em>.</p>
+
+<p>By default, there is a single JobManager instance per Flink cluster. This creates a <em>single point of failure</em> (SPOF): if the JobManager crashes, no new programs can be submitted and running programs fail.</p>
+
+<p>With JobManager High Availability, you can recover from JobManager failures and thereby eliminate the <em>SPOF</em>. You can configure high availability for both <strong>standalone</strong> and <strong>YARN clusters</strong>.</p>
+
+<ul id="markdown-toc">
+  <li><a href="#standalone-cluster-high-availability" id="markdown-toc-standalone-cluster-high-availability">Standalone Cluster High Availability</a>    <ul>
+      <li><a href="#configuration" id="markdown-toc-configuration">Configuration</a></li>
+    </ul>
+  </li>
+  <li><a href="#yarn-cluster-high-availability" id="markdown-toc-yarn-cluster-high-availability">YARN Cluster High Availability</a>    <ul>
+      <li><a href="#configuration-1" id="markdown-toc-configuration-1">Configuration</a></li>
+    </ul>
+  </li>
+  <li><a href="#bootstrap-zookeeper" id="markdown-toc-bootstrap-zookeeper">Bootstrap ZooKeeper</a></li>
+</ul>
+
+<h2 id="standalone-cluster-high-availability">Standalone Cluster High Availability</h2>
+
+<p>The general idea of JobManager high availability for standalone clusters is that there is a <strong>single leading JobManager</strong> at any time and <strong>multiple standby JobManagers</strong> to take over leadership in case the leader fails. This guarantees that there is <strong>no single point of failure</strong> and programs can make progress as soon as a standby JobManager has taken leadership. There is no explicit distinction between standby and master JobManager instances. Each JobManager can take the role of master or standby.</p>
+
+<p>As an example, consider the following setup with three JobManager instances:</p>
+
+<p><img src="fig/jobmanager_ha_overview.png" class="center" /></p>
+
+<h3 id="configuration">Configuration</h3>
+
+<p>To enable JobManager High Availability you have to set the <strong>recovery mode</strong> to <em>zookeeper</em>, configure a <strong>ZooKeeper quorum</strong> and set up a <strong>masters file</strong> with all JobManagers hosts and their web UI ports.</p>
+
+<p>Flink leverages <strong><a href="http://zookeeper.apache.org">ZooKeeper</a></strong> for  <em>distributed coordination</em> between all running JobManager instances. ZooKeeper is a separate service from Flink, which provides highly reliable distributed coordination via leader election and light-weight consistent state storage. Check out <a href="http://zookeeper.apache.org/doc/trunk/zookeeperStarted.html">ZooKeeper’s Getting Started Guide</a> for more information about ZooKeeper. Flink includes scripts to <a href="#bootstrap-zookeeper">bootstrap a simple ZooKeeper</a> installation.</p>
+
+<h4 id="masters-file-masters">Masters File (masters)</h4>
+
+<p>In order to start an HA-cluster configure the <em>masters</em> file in <code>conf/masters</code>:</p>
+
+<ul>
+  <li>
+    <p><strong>masters file</strong>: The <em>masters file</em> contains all hosts, on which JobManagers are started, and the ports to which the web user interface binds.</p>
+
+    <pre>
+jobManagerAddress1:webUIPort1
+[...]
+jobManagerAddressX:webUIPortX
+</pre>
+  </li>
+</ul>
+
+<p>By default, the job manager will pick a <em>random port</em> for inter process communication. You can change this via the <strong><code>recovery.jobmanager.port</code></strong> key. This key accepts single ports (e.g. <code>50010</code>), ranges (<code>50000-50025</code>), or a combination of both (<code>50010,50011,50020-50025,50050-50075</code>).</p>
+
+<h4 id="config-file-flink-confyaml">Config File (flink-conf.yaml)</h4>
+
+<p>In order to start an HA-cluster add the following configuration keys to <code>conf/flink-conf.yaml</code>:</p>
+
+<ul>
+  <li>
+    <p><strong>Recovery mode</strong> (required): The <em>recovery mode</em> has to be set in <code>conf/flink-conf.yaml</code> to <em>zookeeper</em> in order to enable high availability mode.</p>
+
+    <pre>recovery.mode: zookeeper</pre>
+  </li>
+  <li>
+    <p><strong>ZooKeeper quorum</strong> (required): A <em>ZooKeeper quorum</em> is a replicated group of ZooKeeper servers, which provide the distributed coordination service.</p>
+
+    <pre>recovery.zookeeper.quorum: address1:2181[,...],addressX:2181</pre>
+
+    <p>Each <em>addressX:port</em> refers to a ZooKeeper server, which is reachable by Flink at the given address and port.</p>
+  </li>
+  <li>
+    <p><strong>ZooKeeper root</strong> (recommended): The <em>root ZooKeeper node</em>, under which all required coordination data is placed.</p>
+
+    <pre>recovery.zookeeper.path.root: /flink # important: customize per cluster</pre>
+
+    <p><strong>Important</strong>: if you are running multiple Flink HA clusters, you have to manually configure seperate root nodes for each cluster.</p>
+  </li>
+  <li>
+    <p><strong>State backend and storage directory</strong> (required): JobManager meta data is persisted in the <em>state backend</em> and only a pointer to this state is stored in ZooKeeper. Currently, only the file system state backend is supported in HA mode.</p>
+
+    <pre>
+state.backend: filesystem
+state.backend.fs.checkpointdir: hdfs:///flink/checkpoints
+recovery.zookeeper.storageDir: hdfs:///flink/recovery</pre>
+
+    <p>The <code>storageDir</code> stores all meta data needed to recover a JobManager failure.</p>
+  </li>
+</ul>
+
+<p>After configuring the masters and the ZooKeeper quorum, you can use the provided cluster startup scripts as usual. They will start an HA-cluster. Keep in mind that the <strong>ZooKeeper quorum has to be running</strong> when you call the scripts and make sure to <strong>configure a seperate ZooKeeper root path</strong> for each HA cluster you are starting.</p>
+
+<h4 id="example-standalone-cluster-with-2-jobmanagers">Example: Standalone Cluster with 2 JobManagers</h4>
+
+<ol>
+  <li>
+    <p><strong>Configure recovery mode and ZooKeeper quorum</strong> in <code>conf/flink-conf.yaml</code>:</p>
+
+    <pre>
+recovery.mode: zookeeper
+recovery.zookeeper.quorum: localhost:2181
+recovery.zookeeper.path.root: /flink # important: customize per cluster
+state.backend: filesystem
+state.backend.fs.checkpointdir: hdfs:///flink/checkpoints
+recovery.zookeeper.storageDir: hdfs:///flink/recovery</pre>
+  </li>
+  <li>
+    <p><strong>Configure masters</strong> in <code>conf/masters</code>:</p>
+
+    <pre>
+localhost:8081
+localhost:8082</pre>
+  </li>
+  <li>
+    <p><strong>Configure ZooKeeper server</strong> in <code>conf/zoo.cfg</code> (currently it’s only possible to run a single ZooKeeper server per machine):</p>
+
+    <pre>server.0=localhost:2888:3888</pre>
+  </li>
+  <li>
+    <p><strong>Start ZooKeeper quorum</strong>:</p>
+
+    <pre>
+$ bin/start-zookeeper-quorum.sh
+Starting zookeeper daemon on host localhost.</pre>
+  </li>
+  <li>
+    <p><strong>Start an HA-cluster</strong>:</p>
+
+    <pre>
+$ bin/start-cluster.sh
+Starting HA cluster with 2 masters and 1 peers in ZooKeeper quorum.
+Starting jobmanager daemon on host localhost.
+Starting jobmanager daemon on host localhost.
+Starting taskmanager daemon on host localhost.</pre>
+  </li>
+  <li>
+    <p><strong>Stop ZooKeeper quorum and cluster</strong>:</p>
+
+    <pre>
+$ bin/stop-cluster.sh
+Stopping taskmanager daemon (pid: 7647) on localhost.
+Stopping jobmanager daemon (pid: 7495) on host localhost.
+Stopping jobmanager daemon (pid: 7349) on host localhost.
+$ bin/stop-zookeeper-quorum.sh
+Stopping zookeeper daemon (pid: 7101) on host localhost.</pre>
+  </li>
+</ol>
+
+<h2 id="yarn-cluster-high-availability">YARN Cluster High Availability</h2>
+
+<p>When running a highly available YARN cluster, <strong>we don’t run multiple JobManager (ApplicationMaster) instances</strong>, but only one, which is restarted by YARN on failures. The exact behaviour depends on on the specific YARN version you are using.</p>
+
+<h3 id="configuration-1">Configuration</h3>
+
+<h4 id="maximum-application-master-attempts-yarn-sitexml">Maximum Application Master Attempts (yarn-site.xml)</h4>
+
+<p>You have to configure the maximum number of attempts for the application masters for <strong>your</strong> YARN setup in <code>yarn-site.xml</code>:</p>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;property&gt;</span>
+  <span class="nt">&lt;name&gt;</span>yarn.resourcemanager.am.max-attempts<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;value&gt;</span>4<span class="nt">&lt;/value&gt;</span>
+  <span class="nt">&lt;description&gt;</span>
+    The maximum number of application master execution attempts.
+  <span class="nt">&lt;/description&gt;</span>
+<span class="nt">&lt;/property&gt;</span></code></pre></figure>
+
+<p>The default for current YARN versions is 2 (meaning a single JobManager failure is tolerated).</p>
+
+<h4 id="application-attempts-flink-confyaml">Application Attempts (flink-conf.yaml)</h4>
+
+<p>In addition to the HA configuration (<a href="#configuration">see above</a>), you have to configure the maximum attempts in <code>conf/flink-conf.yaml</code>:</p>
+
+<pre>yarn.application-attempts: 10</pre>
+
+<p>This means that the application can be restarted 10 times before YARN fails the application. It’s important to note that <code>yarn.resourcemanager.am.max-attempts</code> is an upper bound for the application restarts. Therfore, the number of application attempts set within Flink cannot exceed the YARN cluster setting with which YARN was started.</p>
+
+<h4 id="container-shutdown-behaviour">Container Shutdown Behaviour</h4>
+
+<ul>
+  <li><strong>YARN 2.3.0 &lt; version &lt; 2.4.0</strong>. All containers are restarted if the application master fails.</li>
+  <li><strong>YARN 2.4.0 &lt; version &lt; 2.6.0</strong>. TaskManager containers are kept alive across application master failures. This has the advantage that the startup time is faster and that the user does not have to wait for obtaining the container resources again.</li>
+  <li><strong>YARN 2.6.0 &lt;= version</strong>: Sets the attempt failure validity interval to the Flinks’ Akka timeout value. The attempt failure validity interval says that an application is only killed after the system has seen the maximum number of application attempts during one interval. This avoids that a long lasting job will deplete it’s application attempts.</li>
+</ul>
+
+<h4 id="example-highly-available-yarn-session">Example: Highly Available YARN Session</h4>
+
+<ol>
+  <li>
+    <p><strong>Configure recovery mode and ZooKeeper quorum</strong> in <code>conf/flink-conf.yaml</code>:</p>
+
+    <pre>
+recovery.mode: zookeeper
+recovery.zookeeper.quorum: localhost:2181
+recovery.zookeeper.path.root: /flink # important: customize per cluster
+state.backend: filesystem
+state.backend.fs.checkpointdir: hdfs:///flink/checkpoints
+recovery.zookeeper.storageDir: hdfs:///flink/recovery
+yarn.application-attempts: 10</pre>
+  </li>
+  <li>
+    <p><strong>Configure ZooKeeper server</strong> in <code>conf/zoo.cfg</code> (currently it’s only possible to run a single ZooKeeper server per machine):</p>
+
+    <pre>server.0=localhost:2888:3888</pre>
+  </li>
+  <li>
+    <p><strong>Start ZooKeeper quorum</strong>:</p>
+
+    <pre>
+$ bin/start-zookeeper-quorum.sh
+Starting zookeeper daemon on host localhost.</pre>
+  </li>
+  <li>
+    <p><strong>Start an HA-cluster</strong>:</p>
+
+    <pre>
+$ bin/yarn-session.sh -n 2</pre>
+  </li>
+</ol>
+
+<h2 id="bootstrap-zookeeper">Bootstrap ZooKeeper</h2>
+
+<p>If you don’t have a running ZooKeeper installation, you can use the helper scripts, which ship with Flink.</p>
+
+<p>There is a ZooKeeper configuration template in <code>conf/zoo.cfg</code>. You can configure the hosts to run ZooKeeper on with the <code>server.X</code> entries, where X is a unique ID of each server:</p>
+
+<pre>
+server.X=addressX:peerPort:leaderPort
+[...]
+server.Y=addressY:peerPort:leaderPort
+</pre>
+
+<p>The script <code>bin/start-zookeeper-quorum.sh</code> will start a ZooKeeper server on each of the configured hosts. The started processes start ZooKeeper servers via a Flink wrapper, which reads the configuration from <code>conf/zoo.cfg</code> and makes sure to set some required configuration values for convenience. In production setups, it is recommended to manage your own ZooKeeper installation.</p>
+
+     <div class="footer">
+      发现错误？想参与编辑？
+      <a href="https://github.com/wuchong/flink-china-doc/edit/master/setup/jobmanager_high_availability.md" target="_blank">
+        在 Github 上编辑此页！
+      </a>
+    </div>
+  </div>
+  
+
+  
+</div>
+
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/anchor-js/3.1.0/anchor.min.js"></script>
+    <script src="/page/js/flink.js"></script>
+
+    <!-- Google Analytics -->
+    <!-- script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-52545728-1', 'auto');
+      ga('send', 'pageview');
+    </script -->
+
+    <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?835985ad7943d8c24bc3c1f155b7d4a2";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+
+    <!-- Disqus -->
+    
+  </body>
+</html>

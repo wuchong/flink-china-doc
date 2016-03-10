@@ -1,0 +1,737 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Apache Flink 1.1-SNAPSHOT 中文文档: Table API - Relational Queries</title>
+    <link rel="shortcut icon" href="/page/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/page/favicon.ico" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/page/css/flink.css">
+    <link rel="stylesheet" href="/page/css/syntax.css">
+    <link rel="stylesheet" href="/page/css/codetabs.css">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    
+
+
+
+
+
+    <!-- Top navbar. -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- The logo. -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-logo">
+            <a href="http://flink.apache.org"><img alt="Apache Flink" src="/page/img/navbar-brand-logo.jpg"></a>
+          </div>
+        </div><!-- /.navbar-header -->
+
+        <!-- The navigation links. -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="hidden-sm "><a href="/">中文文档 1.1</a></li>
+
+            <li class="hidden-sm "><a href="/features.html">特性</a></li>
+
+            <!-- Quickstart -->
+            <li class="dropdown">
+              <a href="/quickstart" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">快速起步<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/quickstart/setup_quickstart.html">安装</a></li>
+                
+                <li class=""><a href="/quickstart/run_example_quickstart.html">运行实例</a></li>
+                
+                <li class=""><a href="/quickstart/java_api_quickstart.html">Java API</a></li>
+                
+                <li class=""><a href="/quickstart/scala_api_quickstart.html">Scala API</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Setup -->
+            <li class="dropdown">
+              <a href="/setup" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">安装 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/setup/building.html">Build Flink from Source</a></li>
+                
+                <li class=""><a href="/setup/config.html">Configuration</a></li>
+                
+
+                <li class="divider"></li>
+                <li role="presentation" class="dropdown-header"><strong>部署</strong></li>
+                
+                
+                <li class=""><a href="/setup/local_setup.html">本地</a></li>
+                
+                <li class=""><a href="/setup/cluster_setup.html">集群 (Standalone)</a></li>
+                
+                <li class=""><a href="/setup/yarn_setup.html">YARN</a></li>
+                
+                <li class=""><a href="/setup/gce_setup.html">Google Compute Engine</a></li>
+                
+                <li class=""><a href="/setup/jobmanager_high_availability.html">High Availability</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Programming Guides -->
+            <li class="dropdown">
+              <a href="/apis" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">编程指南 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                
+                
+                <li class=""><a href="/apis/common/"><strong>基本概念</strong></a></li>
+                
+                <li class=""><a href="/apis/streaming/"><strong>Streaming 指南</strong> (DataStream API)</a></li>
+                
+                <li class="active"><a href="/apis/batch/"><strong>Batch Guide</strong> (DataSet API)</a></li>
+                
+                <li class=""><a href="/apis/best_practices.html">Best Practices</a></li>
+                
+                <li class=""><a href="/apis/cli.html">Command-Line Interface</a></li>
+                
+                <li class=""><a href="/apis/local_execution.html">Local Execution</a></li>
+                
+                <li class=""><a href="/apis/cluster_execution.html">Cluster Execution</a></li>
+                
+                <li class=""><a href="/apis/scala_shell.html">Scala Shell</a></li>
+                
+                <li class=""><a href="/apis/java8.html">Java 8</a></li>
+                
+              </ul>
+            </li>
+
+            <!-- Libraries -->
+            <li class="dropdown active">
+              <a href="/libs" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">类库 <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  
+                  
+                  <li class=""><a href="/apis/batch/libs/gelly.html">Graphs: Gelly</a></li>
+                  
+                  <li class=""><a href="/apis/streaming/libs/cep.html">CEP</a></li>
+                  
+                  <li class=""><a href="/apis/batch/libs/ml/">Machine Learning</a></li>
+                  
+                  <li class="active"><a href="/apis/batch/libs/table.html">Relational: Table</a></li>
+                  
+              </ul>
+            </li>
+
+            <!-- Internals -->
+            <li class="dropdown">
+              <a href="/internals" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">内部 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li role="presentation" class="dropdown-header"><strong>Contribute</strong></li>
+                <li><a href="http://flink.apache.org/how-to-contribute.html"><small><span class="glyphicon glyphicon-new-window"></span></small> How to Contribute</a></li>
+                <li><a href="http://flink.apache.org/contribute-code.html#coding-guidelines"><small><span class="glyphicon glyphicon-new-window"></span></small> Coding Guidelines</a></li>
+                
+                
+                <li class=""><a href="/internals/ide_setup.html">IDE Setup</a></li>
+                
+                <li class=""><a href="/internals/logging.html">Logging</a></li>
+                
+                <li class=""><a href="/internals/general_arch.html">Architecture and Process Model</a></li>
+                
+                <li class=""><a href="/internals/stream_checkpointing.html">Fault Tolerance for Data Streaming</a></li>
+                
+                <li class=""><a href="/internals/types_serialization.html">Type Extraction and Serialization</a></li>
+                
+                <li class=""><a href="/internals/monitoring_rest_api.html">Monitoring REST API</a></li>
+                
+                <li class=""><a href="/internals/job_scheduling.html">Jobs and Scheduling</a></li>
+                
+                <li class=""><a href="/internals/add_operator.html">How-To: Add an Operator</a></li>
+                
+              </ul>
+            </li>
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a class="hidden-sm" href="http://blog.flink-china.org" target="_blank">
+            <small><span class="glyphicon glyphicon-new-window"></span></small> 博客</a></li>
+            <li class="hidden-sm "><a href="/about/">关于本站</a></li>
+          </ul>
+          <form class="navbar-form navbar-right hidden-sm hidden-md" role="search" action="/search-results.html">
+            <div class="form-group">
+              <input type="text" class="form-control" size="16px" name="q" placeholder="Search all pages">
+            </div>
+            <button type="submit" class="btn btn-default">搜索</button>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
+
+
+    
+
+    <!-- Main content. -->
+    <div class="container">
+      
+      
+<div class="row">
+
+
+  <!-- Sub Navigation -->
+  <div class="col-sm-3">
+    <ul id="sub-nav">
+      
+      
+      
+        
+        <li><a href="/apis/batch/" class="active">DataSet API</a>
+          
+          <ul>
+            
+              <li><a href="/apis/batch/dataset_transformations.html" class="">Transformations</a></li>
+            
+              <li><a href="/apis/batch/zip_elements_guide.html" class="">Zipping Elements</a></li>
+            
+          </ul>
+          
+        </li>
+      
+        
+        <li><a href="/apis/batch/fault_tolerance.html" class="">Fault Tolerance</a>
+          
+        </li>
+      
+        
+        <li><a href="/apis/batch/iterations.html" class="">Iterations</a>
+          
+        </li>
+      
+        
+        <li><a href="/apis/batch/connectors.html" class="">Connectors</a>
+          
+        </li>
+      
+        
+        <li><a href="/apis/batch/python.html" class="">Python API</a>
+          
+        </li>
+      
+        
+        <li><a href="/apis/batch/examples.html" class="">Examples</a>
+          
+        </li>
+      
+        
+        <li><a href="/apis/batch/libs/" class="active">Libraries</a>
+          
+          <ul>
+            
+              <li><a href="/apis/batch/libs/gelly.html" class="">Gelly</a></li>
+            
+              <li><a href="/apis/batch/libs/ml/" class="">Machine Learning</a></li>
+            
+              <li><a href="/apis/batch/libs/table.html" class="active">Table</a></li>
+            
+          </ul>
+          
+        </li>
+      
+        
+        <li><a href="/apis/batch/hadoop_compatibility.html" class="">Hadoop Compatibility</a>
+          
+        </li>
+      
+    </ul>
+  </div>
+  <!-- Main -->
+  <div class="col-sm-9">
+    <!-- Top anchor -->
+    <a href="#top"></a>
+
+    <!-- Artifact name change warning. Remove for the 1.0 release. -->
+    
+    <div class="panel panel-default">
+      <div class="panel-body"><strong>重要</strong>: 依赖于Scala的maven artifacts现在会添加一个Scala主版本的后缀，例如 "2.10" 或 "2.11". 请查阅<a href="https://cwiki.apache.org/confluence/display/FLINK/Maven+artifact+names+suffixed+with+Scala+version">迁移指南</a>.</div>
+    </div>
+    
+
+    <!-- Breadcrumbs above the main heading -->
+    <ol class="breadcrumb">
+      
+      
+      <li><a href="/apis/batch/">Batch Guide</a></li>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      
+      
+      
+
+      
+
+      <li><a href="/apis/batch/libs/">Libraries</a></li>
+      
+      
+      <li class="active">Table</li>
+    </ol>
+
+    <div class="text">
+      <!-- Main heading -->
+      <h1>Table API - Relational Queries <span class="beta">(Beta)</span></h1>
+
+      <!-- Content -->
+      
+
+<p><strong>The Table API an experimental feature</strong></p>
+
+<p>Flink provides an API that allows specifying operations using SQL-like expressions. Instead of
+manipulating <code>DataSet</code> or <code>DataStream</code> you work with <code>Table</code> on which relational operations can
+be performed.</p>
+
+<p>The following dependency must be added to your project when using the Table API:</p>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>org.apache.flink<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>flink-table_2.10<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.1-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span></code></pre></figure>
+
+<p>Note that the Table API is currently not part of the binary distribution. See linking with it for cluster execution <a href="/apis/cluster_execution.html#linking-with-modules-not-contained-in-the-binary-distribution">here</a>.</p>
+
+<h2 id="scala-table-api">Scala Table API</h2>
+
+<p>The Table API can be enabled by importing <code>org.apache.flink.api.scala.table._</code>.  This enables
+implicit conversions that allow
+converting a DataSet or DataStream to a Table. This example shows how a DataSet can
+be converted, how relational queries can be specified and how a Table can be
+converted back to a DataSet:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">org.apache.flink.api.scala._</span>
+<span class="k">import</span> <span class="nn">org.apache.flink.api.scala.table._</span>
+
+<span class="k">case</span> <span class="k">class</span> <span class="nc">WC</span><span class="o">(</span><span class="n">word</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">count</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">input</span> <span class="k">=</span> <span class="n">env</span><span class="o">.</span><span class="n">fromElements</span><span class="o">(</span><span class="nc">WC</span><span class="o">(</span><span class="s">&quot;hello&quot;</span><span class="o">,</span> <span class="mi">1</span><span class="o">),</span> <span class="nc">WC</span><span class="o">(</span><span class="s">&quot;hello&quot;</span><span class="o">,</span> <span class="mi">1</span><span class="o">),</span> <span class="nc">WC</span><span class="o">(</span><span class="s">&quot;ciao&quot;</span><span class="o">,</span> <span class="mi">1</span><span class="o">))</span>
+<span class="k">val</span> <span class="n">expr</span> <span class="k">=</span> <span class="n">input</span><span class="o">.</span><span class="n">toTable</span>
+<span class="k">val</span> <span class="n">result</span> <span class="k">=</span> <span class="n">expr</span><span class="o">.</span><span class="n">groupBy</span><span class="o">(</span><span class="-Symbol">&#39;word</span><span class="o">).</span><span class="n">select</span><span class="o">(</span><span class="-Symbol">&#39;word</span><span class="o">,</span> <span class="-Symbol">&#39;count</span><span class="o">.</span><span class="n">sum</span> <span class="n">as</span> <span class="-Symbol">&#39;count</span><span class="o">).</span><span class="n">toDataSet</span><span class="o">[</span><span class="kt">WC</span><span class="o">]</span></code></pre></figure>
+
+<p>The expression DSL uses Scala symbols to refer to field names and we use code generation to
+transform expressions to efficient runtime code. Please note that the conversion to and from
+Tables only works when using Scala case classes or Flink POJOs. Please check out
+the <a href="/apis/index.html">programming guide</a> to learn the requirements for a class to be
+considered a POJO.</p>
+
+<p>This is another example that shows how you
+can join to Tables:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">case</span> <span class="k">class</span> <span class="nc">MyResult</span><span class="o">(</span><span class="n">a</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">d</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>
+
+<span class="k">val</span> <span class="n">input1</span> <span class="k">=</span> <span class="n">env</span><span class="o">.</span><span class="n">fromElements</span><span class="o">(...).</span><span class="n">toTable</span><span class="o">(</span><span class="-Symbol">&#39;a</span><span class="o">,</span> <span class="-Symbol">&#39;b</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">input2</span> <span class="k">=</span> <span class="n">env</span><span class="o">.</span><span class="n">fromElements</span><span class="o">(...).</span><span class="n">toTable</span><span class="o">(</span><span class="-Symbol">&#39;c</span><span class="o">,</span> <span class="-Symbol">&#39;d</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">joined</span> <span class="k">=</span> <span class="n">input1</span><span class="o">.</span><span class="n">join</span><span class="o">(</span><span class="n">input2</span><span class="o">).</span><span class="n">where</span><span class="o">(</span><span class="s">&quot;b = a &amp;&amp; d &gt; 42&quot;</span><span class="o">).</span><span class="n">select</span><span class="o">(</span><span class="s">&quot;a, d&quot;</span><span class="o">).</span><span class="n">toDataSet</span><span class="o">[</span><span class="kt">MyResult</span><span class="o">]</span></code></pre></figure>
+
+<p>Notice, how a DataSet can be converted to a Table by using <code>as</code> and specifying new
+names for the fields. This can also be used to disambiguate fields before a join operation. Also,
+in this example we see that you can also use Strings to specify relational expressions.</p>
+
+<p>Please refer to the Scaladoc (and Javadoc) for a full list of supported operations and a
+description of the expression syntax.</p>
+
+<h2 id="java-table-api">Java Table API</h2>
+
+<p>When using Java, Tables can be converted to and from DataSet and DataStream using <code>TableEnvironment</code>.
+This example is equivalent to the above Scala Example:</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">WC</span> <span class="o">{</span>
+
+  <span class="kd">public</span> <span class="nf">WC</span><span class="o">(</span><span class="n">String</span> <span class="n">word</span><span class="o">,</span> <span class="kt">int</span> <span class="n">count</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">word</span> <span class="o">=</span> <span class="n">word</span><span class="o">;</span> <span class="k">this</span><span class="o">.</span><span class="na">count</span> <span class="o">=</span> <span class="n">count</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="nf">WC</span><span class="o">()</span> <span class="o">{}</span> <span class="c1">// empty constructor to satisfy POJO requirements</span>
+
+  <span class="kd">public</span> <span class="n">String</span> <span class="n">word</span><span class="o">;</span>
+  <span class="kd">public</span> <span class="kt">int</span> <span class="n">count</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="o">...</span>
+
+<span class="n">ExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">ExecutionEnvironment</span><span class="o">.</span><span class="na">createCollectionsEnvironment</span><span class="o">();</span>
+<span class="n">TableEnvironment</span> <span class="n">tableEnv</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">TableEnvironment</span><span class="o">();</span>
+
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">WC</span><span class="o">&gt;</span> <span class="n">input</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="na">fromElements</span><span class="o">(</span>
+        <span class="k">new</span> <span class="nf">WC</span><span class="o">(</span><span class="s">&quot;Hello&quot;</span><span class="o">,</span> <span class="mi">1</span><span class="o">),</span>
+        <span class="k">new</span> <span class="nf">WC</span><span class="o">(</span><span class="s">&quot;Ciao&quot;</span><span class="o">,</span> <span class="mi">1</span><span class="o">),</span>
+        <span class="k">new</span> <span class="nf">WC</span><span class="o">(</span><span class="s">&quot;Hello&quot;</span><span class="o">,</span> <span class="mi">1</span><span class="o">));</span>
+
+<span class="n">Table</span> <span class="n">table</span> <span class="o">=</span> <span class="n">tableEnv</span><span class="o">.</span><span class="na">fromDataSet</span><span class="o">(</span><span class="n">input</span><span class="o">);</span>
+
+<span class="n">Table</span> <span class="n">filtered</span> <span class="o">=</span> <span class="n">table</span>
+        <span class="o">.</span><span class="na">groupBy</span><span class="o">(</span><span class="s">&quot;word&quot;</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">select</span><span class="o">(</span><span class="s">&quot;word.count as count, word&quot;</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="s">&quot;count = 2&quot;</span><span class="o">);</span>
+
+<span class="n">DataSet</span><span class="o">&lt;</span><span class="n">WC</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">tableEnv</span><span class="o">.</span><span class="na">toDataSet</span><span class="o">(</span><span class="n">filtered</span><span class="o">,</span> <span class="n">WC</span><span class="o">.</span><span class="na">class</span><span class="o">);</span></code></pre></figure>
+
+<p>When using Java, the embedded DSL for specifying expressions cannot be used. Only String expressions
+are supported. They support exactly the same feature set as the expression DSL.</p>
+
+<h2 id="table-api-operators">Table API Operators</h2>
+<p>Table API provide a domain-spcific language to execute language-integrated queries on structured data in Scala and Java.
+This section gives a brief overview of all available operators. You can find more details of operators in the <a href="/api/java/org/apache/flink/api/table/Table.html">Javadoc</a>.</p>
+
+<div class="codetabs">
+  <div data-lang="java">
+
+    <p><br /></p>
+
+    <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="text-left" style="width: 20%">Operators</th>
+      <th class="text-center">Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td><strong>Select</strong></td>
+      <td>
+        <p>Similar to a SQL SELECT statement. Perform a select operation.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Table</span> <span class="n">in</span> <span class="o">=</span> <span class="n">tableEnv</span><span class="o">.</span><span class="na">fromDataSet</span><span class="o">(</span><span class="n">ds</span><span class="o">,</span> <span class="s">&quot;a, b, c&quot;</span><span class="o">);</span>
+<span class="n">Table</span> <span class="n">result</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">select</span><span class="o">(</span><span class="s">&quot;a, c as d&quot;</span><span class="o">);</span></code></pre></figure>
+
+      </td>
+    </tr>
+
+    <tr>
+      <td><strong>As</strong></td>
+      <td>
+        <p>Rename fields.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Table</span> <span class="n">in</span> <span class="o">=</span> <span class="n">tableEnv</span><span class="o">.</span><span class="na">fromDataSet</span><span class="o">(</span><span class="n">ds</span><span class="o">,</span> <span class="s">&quot;a, b, c&quot;</span><span class="o">);</span>
+<span class="n">Table</span> <span class="n">result</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">as</span><span class="o">(</span><span class="s">&quot;d, e, f&quot;</span><span class="o">);</span></code></pre></figure>
+
+      </td>
+    </tr>
+
+    <tr>
+      <td><strong>Filter</strong></td>
+      <td>
+        <p>Similar to a SQL WHERE clause. Filter out elements that do not pass the filter predicate.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Table</span> <span class="n">in</span> <span class="o">=</span> <span class="n">tableEnv</span><span class="o">.</span><span class="na">fromDataSet</span><span class="o">(</span><span class="n">ds</span><span class="o">,</span> <span class="s">&quot;a, b, c&quot;</span><span class="o">);</span>
+<span class="n">Table</span> <span class="n">result</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="s">&quot;a % 2 = 0&quot;</span><span class="o">);</span></code></pre></figure>
+
+      </td>
+    </tr>
+
+    <tr>
+      <td><strong>Where</strong></td>
+      <td>
+        <p>Similar to a SQL WHERE clause. Filter out elements that do not pass the filter predicate.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Table</span> <span class="n">in</span> <span class="o">=</span> <span class="n">tableEnv</span><span class="o">.</span><span class="na">fromDataSet</span><span class="o">(</span><span class="n">ds</span><span class="o">,</span> <span class="s">&quot;a, b, c&quot;</span><span class="o">);</span>
+<span class="n">Table</span> <span class="n">result</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">where</span><span class="o">(</span><span class="s">&quot;b = &#39;red&#39;&quot;</span><span class="o">);</span></code></pre></figure>
+
+      </td>
+    </tr>
+
+    <tr>
+      <td><strong>GroupBy</strong></td>
+      <td>
+        <p>Similar to a SQL GROUPBY clause. Group the elements on the grouping keys, with a following aggregation
+        operator to aggregate on per-group basis.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Table</span> <span class="n">in</span> <span class="o">=</span> <span class="n">tableEnv</span><span class="o">.</span><span class="na">fromDataSet</span><span class="o">(</span><span class="n">ds</span><span class="o">,</span> <span class="s">&quot;a, b, c&quot;</span><span class="o">);</span>
+<span class="n">Table</span> <span class="n">result</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">groupBy</span><span class="o">(</span><span class="s">&quot;a&quot;</span><span class="o">).</span><span class="na">select</span><span class="o">(</span><span class="s">&quot;a, b.sum as d&quot;</span><span class="o">);</span></code></pre></figure>
+
+        <p><i>Note:</i> Flink can refer to nonaggregated columns in the select list that are not named in
+        the groupBy clause, it could be used to get better performance by avoiding unnecessary column sorting and
+        grouping while nonaggregated column is cogrouped with columns in groupBy clause. For example:</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Table</span> <span class="n">in</span> <span class="o">=</span> <span class="n">tableEnv</span><span class="o">.</span><span class="na">fromDataSet</span><span class="o">(</span><span class="n">ds</span><span class="o">,</span> <span class="s">&quot;a, b, c&quot;</span><span class="o">);</span>
+<span class="n">Table</span> <span class="n">result</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">groupBy</span><span class="o">(</span><span class="s">&quot;a&quot;</span><span class="o">).</span><span class="na">select</span><span class="o">(</span><span class="s">&quot;a, b, c.sum as d&quot;</span><span class="o">);</span></code></pre></figure>
+
+      </td>
+    </tr>
+
+    <tr>
+      <td><strong>Join</strong></td>
+      <td>
+        <p>Similar to a SQL JOIN clause. Join two tables, both tables must have distinct field name, and the where
+        clause is mandatory for join condition.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Table</span> <span class="n">left</span> <span class="o">=</span> <span class="n">tableEnv</span><span class="o">.</span><span class="na">fromDataSet</span><span class="o">(</span><span class="n">ds1</span><span class="o">,</span> <span class="s">&quot;a, b, c&quot;</span><span class="o">);</span>
+<span class="n">Table</span> <span class="n">right</span> <span class="o">=</span> <span class="n">tableEnv</span><span class="o">.</span><span class="na">fromDataSet</span><span class="o">(</span><span class="n">ds2</span><span class="o">,</span> <span class="s">&quot;d, e, f&quot;</span><span class="o">);</span>
+<span class="n">Table</span> <span class="n">result</span> <span class="o">=</span> <span class="n">left</span><span class="o">.</span><span class="na">join</span><span class="o">(</span><span class="n">right</span><span class="o">).</span><span class="na">where</span><span class="o">(</span><span class="s">&quot;a = d&quot;</span><span class="o">).</span><span class="na">select</span><span class="o">(</span><span class="s">&quot;a, b, e&quot;</span><span class="o">);</span></code></pre></figure>
+
+      </td>
+    </tr>
+
+    <tr>
+      <td><strong>Union</strong></td>
+      <td>
+        <p>Similar to a SQL UNION ALL clause. Union two tables, both tables must have identical schema(field names and types).</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Table</span> <span class="n">left</span> <span class="o">=</span> <span class="n">tableEnv</span><span class="o">.</span><span class="na">fromDataSet</span><span class="o">(</span><span class="n">ds1</span><span class="o">,</span> <span class="s">&quot;a, b, c&quot;</span><span class="o">);</span>
+<span class="n">Table</span> <span class="n">right</span> <span class="o">=</span> <span class="n">tableEnv</span><span class="o">.</span><span class="na">fromDataSet</span><span class="o">(</span><span class="n">ds2</span><span class="o">,</span> <span class="s">&quot;a, b, c&quot;</span><span class="o">);</span>
+<span class="n">Table</span> <span class="n">result</span> <span class="o">=</span> <span class="n">left</span><span class="o">.</span><span class="na">union</span><span class="o">(</span><span class="n">right</span><span class="o">);</span></code></pre></figure>
+
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+  </div>
+  <div data-lang="scala">
+    <p><br /></p>
+
+    <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th class="text-left" style="width: 20%">Operators</th>
+      <th class="text-center">Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td><strong>Select</strong></td>
+      <td>
+        <p>Similar to a SQL SELECT statement. Perform a select operation.</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">in</span> <span class="k">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">as</span><span class="o">(</span><span class="-Symbol">&#39;a</span><span class="o">,</span> <span class="-Symbol">&#39;b</span><span class="o">,</span> <span class="-Symbol">&#39;c</span><span class="o">);</span>
+<span class="k">val</span> <span class="n">result</span> <span class="k">=</span> <span class="n">in</span><span class="o">.</span><span class="n">select</span><span class="o">(</span><span class="-Symbol">&#39;a</span><span class="o">,</span> <span class="-Symbol">&#39;c</span> <span class="n">as</span> <span class="-Symbol">&#39;d</span><span class="o">);</span></code></pre></figure>
+
+      </td>
+    </tr>
+
+    <tr>
+      <td><strong>As</strong></td>
+      <td>
+        <p>Rename fields.</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">in</span> <span class="k">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">as</span><span class="o">(</span><span class="-Symbol">&#39;a</span><span class="o">,</span> <span class="-Symbol">&#39;b</span><span class="o">,</span> <span class="-Symbol">&#39;c</span><span class="o">);</span></code></pre></figure>
+
+      </td>
+    </tr>
+
+    <tr>
+      <td><strong>Filter</strong></td>
+      <td>
+        <p>Similar to a SQL WHERE clause. Filter out elements that do not pass the filter predicate.</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">in</span> <span class="k">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">as</span><span class="o">(</span><span class="-Symbol">&#39;a</span><span class="o">,</span> <span class="-Symbol">&#39;b</span><span class="o">,</span> <span class="-Symbol">&#39;c</span><span class="o">);</span>
+<span class="k">val</span> <span class="n">result</span> <span class="k">=</span> <span class="n">in</span><span class="o">.</span><span class="n">filter</span><span class="o">(</span><span class="-Symbol">&#39;a</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">===</span> <span class="mi">0</span><span class="o">)</span></code></pre></figure>
+
+      </td>
+    </tr>
+
+    <tr>
+      <td><strong>Where</strong></td>
+      <td>
+        <p>Similar to a SQL WHERE clause. Filter out elements that do not pass the filter predicate.</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">in</span> <span class="k">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">as</span><span class="o">(</span><span class="-Symbol">&#39;a</span><span class="o">,</span> <span class="-Symbol">&#39;b</span><span class="o">,</span> <span class="-Symbol">&#39;c</span><span class="o">);</span>
+<span class="k">val</span> <span class="n">result</span> <span class="k">=</span> <span class="n">in</span><span class="o">.</span><span class="n">where</span><span class="o">(</span><span class="-Symbol">&#39;b</span> <span class="o">===</span> <span class="s">&quot;red&quot;</span><span class="o">);</span></code></pre></figure>
+
+      </td>
+    </tr>
+
+    <tr>
+      <td><strong>GroupBy</strong></td>
+      <td>
+        <p>Similar to a SQL GROUPBY clause. Group the elements on the grouping keys, with a following aggregation
+        operator to aggregate on per-group basis.</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">in</span> <span class="k">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">as</span><span class="o">(</span><span class="-Symbol">&#39;a</span><span class="o">,</span> <span class="-Symbol">&#39;b</span><span class="o">,</span> <span class="-Symbol">&#39;c</span><span class="o">);</span>
+<span class="k">val</span> <span class="n">result</span> <span class="k">=</span> <span class="n">in</span><span class="o">.</span><span class="n">groupBy</span><span class="o">(</span><span class="-Symbol">&#39;a</span><span class="o">).</span><span class="n">select</span><span class="o">(</span><span class="-Symbol">&#39;a</span><span class="o">,</span> <span class="-Symbol">&#39;b</span><span class="o">.</span><span class="n">sum</span> <span class="n">as</span> <span class="-Symbol">&#39;d</span><span class="o">);</span></code></pre></figure>
+
+        <p><i>Note:</i> Flink can refer to nonaggregated columns in the select list that are not named in
+        the groupBy clause, it could be used to get better performance by avoiding unnecessary column sorting and
+        grouping while nonaggregated column is cogrouped with columns in groupBy clause. For example:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">in</span> <span class="k">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">as</span><span class="o">(</span><span class="-Symbol">&#39;a</span><span class="o">,</span> <span class="-Symbol">&#39;b</span><span class="o">,</span> <span class="-Symbol">&#39;c</span><span class="o">);</span>
+<span class="k">val</span> <span class="n">result</span> <span class="k">=</span> <span class="n">in</span><span class="o">.</span><span class="n">groupBy</span><span class="o">(</span><span class="-Symbol">&#39;a</span><span class="o">).</span><span class="n">select</span><span class="o">(</span><span class="-Symbol">&#39;a</span><span class="o">,</span> <span class="-Symbol">&#39;b</span><span class="o">,</span> <span class="-Symbol">&#39;c</span><span class="o">.</span><span class="n">sum</span> <span class="n">as</span> <span class="-Symbol">&#39;d</span><span class="o">);</span></code></pre></figure>
+
+      </td>
+    </tr>
+
+    <tr>
+      <td><strong>Join</strong></td>
+      <td>
+        <p>Similar to a SQL JOIN clause. Join two tables, both tables must have distinct field name, and the where
+        clause is mandatory for join condition.</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">left</span> <span class="k">=</span> <span class="n">ds1</span><span class="o">.</span><span class="n">as</span><span class="o">(</span><span class="-Symbol">&#39;a</span><span class="o">,</span> <span class="-Symbol">&#39;b</span><span class="o">,</span> <span class="-Symbol">&#39;c</span><span class="o">);</span>
+<span class="k">val</span> <span class="n">right</span> <span class="k">=</span> <span class="n">ds2</span><span class="o">.</span><span class="n">as</span><span class="o">(</span><span class="-Symbol">&#39;d</span><span class="o">,</span> <span class="-Symbol">&#39;e</span><span class="o">,</span> <span class="-Symbol">&#39;f</span><span class="o">);</span>
+<span class="k">val</span> <span class="n">result</span> <span class="k">=</span> <span class="n">left</span><span class="o">.</span><span class="n">join</span><span class="o">(</span><span class="n">right</span><span class="o">).</span><span class="n">where</span><span class="o">(</span><span class="-Symbol">&#39;a</span> <span class="o">===</span> <span class="-Symbol">&#39;d</span><span class="o">).</span><span class="n">select</span><span class="o">(</span><span class="-Symbol">&#39;a</span><span class="o">,</span> <span class="-Symbol">&#39;b</span><span class="o">,</span> <span class="-Symbol">&#39;e</span><span class="o">);</span></code></pre></figure>
+
+      </td>
+    </tr>
+
+    <tr>
+      <td><strong>Union</strong></td>
+      <td>
+        <p>Similar to a SQL UNION ALL clause. Union two tables, both tables must have identical schema(field names and types).</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">left</span> <span class="k">=</span> <span class="n">ds1</span><span class="o">.</span><span class="n">as</span><span class="o">(</span><span class="-Symbol">&#39;a</span><span class="o">,</span> <span class="-Symbol">&#39;b</span><span class="o">,</span> <span class="-Symbol">&#39;c</span><span class="o">);</span>
+<span class="k">val</span> <span class="n">right</span> <span class="k">=</span> <span class="n">ds2</span><span class="o">.</span><span class="n">as</span><span class="o">(</span><span class="-Symbol">&#39;a</span><span class="o">,</span> <span class="-Symbol">&#39;b</span><span class="o">,</span> <span class="-Symbol">&#39;c</span><span class="o">);</span>
+<span class="k">val</span> <span class="n">result</span> <span class="k">=</span> <span class="n">left</span><span class="o">.</span><span class="n">union</span><span class="o">(</span><span class="n">right</span><span class="o">);</span></code></pre></figure>
+
+      </td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+</div>
+
+<h2 id="expression-syntax">Expression Syntax</h2>
+<p>Some of operators in previous section expect an expression. These can either be specified using an embedded Scala DSL or
+a String expression. Please refer to the examples above to learn how expressions can be
+formulated.</p>
+
+<p>This is the complete EBNF grammar for expressions:</p>
+
+<figure class="highlight"><pre><code class="language-ebnf" data-lang="ebnf"><span class="k">expression </span><span class="o">=</span> <span class="k">single expression </span><span class="p">,</span> <span class="p">{</span> <span class="s2">&quot;,&quot;</span> <span class="p">,</span> <span class="k">single expression </span><span class="p">}</span> <span class="p">;</span>
+
+<span class="k">single expression </span><span class="o">=</span> <span class="k">alias </span><span class="p">|</span> <span class="k">logic </span><span class="p">;</span>
+
+<span class="k">alias </span><span class="o">=</span> <span class="k">logic </span><span class="p">|</span> <span class="k">logic </span><span class="p">,</span> <span class="s2">&quot;AS&quot;</span> <span class="p">,</span> <span class="k">field reference </span><span class="p">;</span>
+
+<span class="k">logic </span><span class="o">=</span> <span class="k">comparison </span><span class="p">,</span> <span class="p">[</span> <span class="p">(</span> <span class="s2">&quot;&amp;&amp;&quot;</span> <span class="p">|</span> <span class="s2">&quot;||&quot;</span> <span class="p">)</span> <span class="p">,</span> <span class="k">comparison </span><span class="p">]</span> <span class="p">;</span>
+
+<span class="k">comparison </span><span class="o">=</span> <span class="k">term </span><span class="p">,</span> <span class="p">[</span> <span class="p">(</span> <span class="s2">&quot;=&quot;</span> <span class="p">|</span> <span class="s2">&quot;!=&quot;</span> <span class="p">|</span> <span class="s2">&quot;&gt;&quot;</span> <span class="p">|</span> <span class="s2">&quot;&gt;=&quot;</span> <span class="p">|</span> <span class="s2">&quot;&lt;&quot;</span> <span class="p">|</span> <span class="s2">&quot;&lt;=&quot;</span> <span class="p">)</span> <span class="p">,</span> <span class="k">term </span><span class="p">]</span> <span class="p">;</span>
+
+<span class="k">term </span><span class="o">=</span> <span class="k">product </span><span class="p">,</span> <span class="p">[</span> <span class="p">(</span> <span class="s2">&quot;+&quot;</span> <span class="p">|</span> <span class="s2">&quot;-&quot;</span> <span class="p">)</span> <span class="p">,</span> <span class="k">product </span><span class="p">]</span> <span class="p">;</span>
+
+<span class="k">product </span><span class="o">=</span> <span class="k">binary bitwise </span><span class="p">,</span> <span class="p">[</span> <span class="p">(</span> <span class="s2">&quot;*&quot;</span> <span class="p">|</span> <span class="s2">&quot;/&quot;</span> <span class="p">|</span> <span class="s2">&quot;%&quot;</span> <span class="p">)</span> <span class="p">,</span> <span class="k">binary bitwise </span><span class="p">]</span> <span class="p">;</span>
+
+<span class="k">binary bitwise </span><span class="o">=</span> <span class="k">unary </span><span class="p">,</span> <span class="p">[</span> <span class="p">(</span> <span class="s2">&quot;&amp;&quot;</span> <span class="p">|</span> <span class="s2">&quot;!&quot;</span> <span class="p">|</span> <span class="s2">&quot;^&quot;</span> <span class="p">)</span> <span class="p">,</span> <span class="k">unary </span><span class="p">]</span> <span class="p">;</span>
+
+<span class="k">unary </span><span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;!&quot;</span> <span class="p">|</span> <span class="s2">&quot;-&quot;</span> <span class="p">|</span> <span class="s2">&quot;~&quot;</span> <span class="p">]</span> <span class="p">,</span> <span class="k">suffix </span><span class="p">;</span>
+
+<span class="k">suffix </span><span class="o">=</span> <span class="k">atom </span><span class="p">|</span> <span class="k">aggregation </span><span class="p">|</span> <span class="k">cast </span><span class="p">|</span> <span class="k">as </span><span class="p">|</span> <span class="k">substring </span><span class="p">;</span>
+
+<span class="k">aggregation </span><span class="o">=</span> <span class="k">atom </span><span class="p">,</span> <span class="p">[</span> <span class="s2">&quot;.sum&quot;</span> <span class="p">|</span> <span class="s2">&quot;.min&quot;</span> <span class="p">|</span> <span class="s2">&quot;.max&quot;</span> <span class="p">|</span> <span class="s2">&quot;.count&quot;</span> <span class="p">|</span> <span class="s2">&quot;.avg&quot;</span> <span class="p">]</span> <span class="p">;</span>
+
+<span class="k">cast </span><span class="o">=</span> <span class="k">atom </span><span class="p">,</span> <span class="s2">&quot;.cast(&quot;</span> <span class="p">,</span> <span class="k">data type </span><span class="p">,</span> <span class="s2">&quot;)&quot;</span> <span class="p">;</span>
+
+<span class="k">data type </span><span class="o">=</span> <span class="s2">&quot;BYTE&quot;</span> <span class="p">|</span> <span class="s2">&quot;SHORT&quot;</span> <span class="p">|</span> <span class="s2">&quot;INT&quot;</span> <span class="p">|</span> <span class="s2">&quot;LONG&quot;</span> <span class="p">|</span> <span class="s2">&quot;FLOAT&quot;</span> <span class="p">|</span> <span class="s2">&quot;DOUBLE&quot;</span> <span class="p">|</span> <span class="s2">&quot;BOOL&quot;</span> <span class="p">|</span> <span class="s2">&quot;BOOLEAN&quot;</span> <span class="p">|</span> <span class="s2">&quot;STRING&quot;</span> <span class="p">|</span> <span class="s2">&quot;DATE&quot;</span> <span class="p">;</span>
+
+<span class="k">as </span><span class="o">=</span> <span class="k">atom </span><span class="p">,</span> <span class="s2">&quot;.as(&quot;</span> <span class="p">,</span> <span class="k">field reference </span><span class="p">,</span> <span class="s2">&quot;)&quot;</span> <span class="p">;</span>
+
+<span class="k">substring </span><span class="o">=</span> <span class="k">atom </span><span class="p">,</span> <span class="s2">&quot;.substring(&quot;</span> <span class="p">,</span> <span class="k">substring start </span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;,&quot;</span> <span class="k">substring end</span><span class="p">]</span> <span class="p">,</span> <span class="s2">&quot;)&quot;</span> <span class="p">;</span>
+
+<span class="k">substring start </span><span class="o">=</span> <span class="k">single expression </span><span class="p">;</span>
+
+<span class="k">substring end </span><span class="o">=</span> <span class="k">single expression </span><span class="p">;</span>
+
+<span class="k">atom </span><span class="o">=</span> <span class="p">(</span> <span class="s2">&quot;(&quot;</span> <span class="p">,</span> <span class="k">single expression </span><span class="p">,</span> <span class="s2">&quot;)&quot;</span> <span class="p">)</span> <span class="p">|</span> <span class="k">literal </span><span class="p">|</span> <span class="k">field reference </span><span class="p">;</span></code></pre></figure>
+
+<p>Here, <code>literal</code> is a valid Java literal and <code>field reference</code> specifies a column in the data. The
+column names follow Java identifier syntax.</p>
+
+<p>Only the types <code>LONG</code> and <code>STRING</code> can be casted to <code>DATE</code> and vice versa. A <code>LONG</code> casted to <code>DATE</code> must be a milliseconds timestamp. A <code>STRING</code> casted to <code>DATE</code> must have the format “<code>yyyy-MM-dd HH:mm:ss.SSS</code>”, “<code>yyyy-MM-dd</code>”, “<code>HH:mm:ss</code>”, or a milliseconds timestamp. By default, all timestamps refer to the UTC timezone beginning from January 1, 1970, 00:00:00 in milliseconds.</p>
+
+      <div class="footer">
+      发现错误？想参与编辑？
+      <a href="https://github.com/wuchong/flink-china-doc/edit/master/apis/batch/libs/table.md" target="_blank">
+        在 Github 上编辑此页！
+      </a>
+    </div>
+    </div>
+  </div>
+
+  
+</div>
+
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/anchor-js/3.1.0/anchor.min.js"></script>
+    <script src="/page/js/flink.js"></script>
+
+    <!-- Google Analytics -->
+    <!-- script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-52545728-1', 'auto');
+      ga('send', 'pageview');
+    </script -->
+
+    <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?835985ad7943d8c24bc3c1f155b7d4a2";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+
+    <!-- Disqus -->
+    
+  </body>
+</html>
