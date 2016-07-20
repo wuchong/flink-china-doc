@@ -1,8 +1,8 @@
 ---
-title: "Windows"
+title: "窗口操作"
 
-sub-nav-id: windows
-sub-nav-group: streaming
+sub-nav-id: 窗口
+sub-nav-group: 流
 sub-nav-pos: 3
 ---
 <!--
@@ -27,16 +27,13 @@ under the License.
 * This will be replaced by the TOC
 {:toc}
 
-## Windows on Keyed Data Streams
+## 在keyed数据流上的窗口操作
 
-Flink offers a variety of methods for defining windows on a `KeyedStream`. All of these group elements *per key*,
-i.e., each window will contain elements with the same key value.
+Flink提供了多种在keyedStream上定义窗口的方法。所有元素都是基于key的，即每个窗口包含了相同的key的所有元素。
 
-### Basic Window Constructs
+### 基本的窗口构造
 
-Flink offers a general window mechanism that provides flexibility, as well as a number of pre-defined windows
-for common use cases. See first if your use case can be served by the pre-defined windows below before moving
-to defining your own windows.
+Flink提供了通用的窗口机制，可以提供灵活性，而且为共同的用例提供了一些预定义的窗口机制。在定义你自己的窗口之前，我们先来看下预定义的窗口可以为你的用例提供什么。
 
 <div class="codetabs" markdown="1">
 <div data-lang="java" markdown="1">
@@ -46,18 +43,17 @@ to defining your own windows.
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th class="text-left" style="width: 25%">Transformation</th>
-      <th class="text-center">Description</th>
+      <th class="text-left" style="width: 25%">转换操作</th>
+      <th class="text-center">描述</th>
     </tr>
   </thead>
   <tbody>
       <tr>
-        <td><strong>Tumbling time window</strong><br>KeyedStream &rarr; WindowedStream</td>
+        <td><strong>翻滚时间窗口</strong><br>KeyedStream &rarr; WindowedStream</td>
         <td>
           <p>
-          Defines a window of 5 seconds, that "tumbles". This means that elements are
-          grouped according to their timestamp in groups of 5 second duration, and every element belongs to exactly one window.
-	  The notion of time is specified by the selected TimeCharacteristic (see <a href="{{ site.baseurl }}/apis/streaming/time.html">time</a>).
+          定义一个5秒钟的“翻滚”窗口。这意味着元素以5秒钟的时间戳分组，而且每个元素只属于1个窗口。
+	  时间的概念由TimeCharacteristic(see time)来指定。 (see <a href="{{ site.baseurl }}/apis/streaming/time.html">time</a>).
     {% highlight java %}
 keyedStream.timeWindow(Time.seconds(5));
     {% endhighlight %}
@@ -65,13 +61,11 @@ keyedStream.timeWindow(Time.seconds(5));
         </td>
       </tr>
       <tr>
-          <td><strong>Sliding time window</strong><br>KeyedStream &rarr; WindowedStream</td>
+          <td><strong>滑动时间窗口</strong><br>KeyedStream &rarr; WindowedStream</td>
           <td>
             <p>
-             Defines a window of 5 seconds, that "slides" by 1 seconds. This means that elements are
-             grouped according to their timestamp in groups of 5 second duration, and elements can belong to more than
-             one window (since windows overlap by at most 4 seconds)
-             The notion of time is specified by the selected TimeCharacteristic (see <a href="{{ site.baseurl }}/apis/streaming/time.html">time</a>).
+             定义一个5秒钟的窗口，每秒钟滑动一次。这意味着元素以5秒钟的时间戳分组，每个元素可以属于不止1个窗口（因为窗口最多重叠4秒）。
+             时间的概念由TimeCharacteristic(see time)来指定。 (see <a href="{{ site.baseurl }}/apis/streaming/time.html">time</a>).
       {% highlight java %}
 keyedStream.timeWindow(Time.seconds(5), Time.seconds(1));
       {% endhighlight %}
@@ -79,12 +73,10 @@ keyedStream.timeWindow(Time.seconds(5), Time.seconds(1));
           </td>
         </tr>
       <tr>
-        <td><strong>Tumbling count window</strong><br>KeyedStream &rarr; WindowedStream</td>
+        <td><strong>翻滚数量窗口</strong><br>KeyedStream &rarr; WindowedStream</td>
         <td>
           <p>
-          Defines a window of 1000 elements, that "tumbles". This means that elements are
-          grouped according to their arrival time (equivalent to processing time) in groups of 1000 elements,
-          and every element belongs to exactly one window.
+          定义一个1000个元素的翻滚窗口。这意味着元素根据到达的（等同于processing time到达）1000个元素来分组，每个元素只属于1个窗口。
     {% highlight java %}
 keyedStream.countWindow(1000);
     {% endhighlight %}
@@ -92,12 +84,10 @@ keyedStream.countWindow(1000);
         </td>
       </tr>
       <tr>
-      <td><strong>Sliding count window</strong><br>KeyedStream &rarr; WindowedStream</td>
+      <td><strong>滑动数量窗口</strong><br>KeyedStream &rarr; WindowedStream</td>
       <td>
         <p>
-          Defines a window of 1000 elements, that "slides" every 100 elements. This means that elements are
-          grouped according to their arrival time (equivalent to processing time) in groups of 1000 elements,
-          and every element can belong to more than one window (as windows overlap by at most 900 elements).
+          定义一个1000个元素的窗口，以每100个元素滑动触发。这意味着每1000个元素被分成1组，每个元素可以属于多于1个窗口（因为元素最多有900次重合）
   {% highlight java %}
 keyedStream.countWindow(1000, 100)
   {% endhighlight %}
@@ -116,18 +106,17 @@ keyedStream.countWindow(1000, 100)
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th class="text-left" style="width: 25%">Transformation</th>
-      <th class="text-center">Description</th>
+      <th class="text-left" style="width: 25%">转换操作</th>
+      <th class="text-center">描述</th>
     </tr>
   </thead>
   <tbody>
       <tr>
-        <td><strong>Tumbling time window</strong><br>KeyedStream &rarr; WindowedStream</td>
+        <td><strong>翻滚时间窗口</strong><br>KeyedStream &rarr; WindowedStream</td>
         <td>
           <p>
-          Defines a window of 5 seconds, that "tumbles". This means that elements are
-          grouped according to their timestamp in groups of 5 second duration, and every element belongs to exactly one window.
-          The notion of time is specified by the selected TimeCharacteristic (see <a href="{{ site.baseurl }}/apis/streaming/time.html">time</a>).
+          定义一个5秒钟的“翻滚”窗口。这意味着元素以5秒钟的时间戳分组，而且每个元素只属于1个窗口。
+          时间的概念由TimeCharacteristic(see time)来指定。 (see <a href="{{ site.baseurl }}/apis/streaming/time.html">time</a>).
     {% highlight scala %}
 keyedStream.timeWindow(Time.seconds(5))
     {% endhighlight %}
@@ -135,13 +124,11 @@ keyedStream.timeWindow(Time.seconds(5))
         </td>
       </tr>
       <tr>
-          <td><strong>Sliding time window</strong><br>KeyedStream &rarr; WindowedStream</td>
+          <td><strong>滑动时间窗口</strong><br>KeyedStream &rarr; WindowedStream</td>
           <td>
             <p>
-             Defines a window of 5 seconds, that "slides" by 1 seconds. This means that elements are
-             grouped according to their timestamp in groups of 5 second duration, and elements can belong to more than
-             one window (since windows overlap by at most 4 seconds)
-             The notion of time is specified by the selected TimeCharacteristic (see <a href="{{ site.baseurl }}/apis/streaming/time.html">time</a>).
+             定义一个5秒钟的窗口，每秒钟滑动一次。这意味着元素以5秒钟的时间戳分组，每个元素可以属于不止1个窗口（因为窗口最多重叠4秒）。
+             时间的概念由TimeCharacteristic(see time)来指定。 (see <a href="{{ site.baseurl }}/apis/streaming/time.html">time</a>).
       {% highlight scala %}
 keyedStream.timeWindow(Time.seconds(5), Time.seconds(1))
       {% endhighlight %}
@@ -149,12 +136,10 @@ keyedStream.timeWindow(Time.seconds(5), Time.seconds(1))
           </td>
         </tr>
       <tr>
-        <td><strong>Tumbling count window</strong><br>KeyedStream &rarr; WindowedStream</td>
+        <td><strong>翻滚数量窗口</strong><br>KeyedStream &rarr; WindowedStream</td>
         <td>
           <p>
-          Defines a window of 1000 elements, that "tumbles". This means that elements are
-          grouped according to their arrival time (equivalent to processing time) in groups of 1000 elements,
-          and every element belongs to exactly one window.
+          定义一个1000个元素的翻滚窗口。这意味着元素根据到达的（等同于processing time到达）1000个元素来分组，每个元素只属于1个窗口。
     {% highlight scala %}
 keyedStream.countWindow(1000)
     {% endhighlight %}
@@ -162,12 +147,10 @@ keyedStream.countWindow(1000)
         </td>
       </tr>
       <tr>
-      <td><strong>Sliding count window</strong><br>KeyedStream &rarr; WindowedStream</td>
+      <td><strong>滑动数量窗口</strong><br>KeyedStream &rarr; WindowedStream</td>
       <td>
         <p>
-          Defines a window of 1000 elements, that "slides" every 100 elements. This means that elements are
-          grouped according to their arrival time (equivalent to processing time) in groups of 1000 elements,
-          and every element can belong to more than one window (as windows overlap by at most 900 elements).
+          定义一个1000个元素的窗口，以每100个元素滑动触发。这意味着每1000个元素被分成1组，每个元素可以属于多于1个窗口（因为元素最多有900次重合）
   {% highlight scala %}
 keyedStream.countWindow(1000, 100)
   {% endhighlight %}
@@ -180,12 +163,10 @@ keyedStream.countWindow(1000, 100)
 </div>
 </div>
 
-### Advanced Window Constructs
+### 高级窗口的构造
 
-The general mechanism can define more powerful windows at the cost of more verbose syntax. For example,
-below is a window definition where windows hold elements of the last 5 seconds and slides every 1 second,
-but the execution of the window function is triggered when 100 elements have been added to the
-window, and every time execution is triggered, 10 elements are retained in the window:
+一般的窗口定义机制会使用更冗长的语法来定义更强大的窗口。例如，下面是一个例子，定义了
+一个每秒钟滑动一次，每次包含5秒钟的数据，但是只有当100个元素到达窗口时才被触发，且每次被执行完，会留下10个元素在窗口中。
 
 <div class="codetabs" markdown="1">
 <div data-lang="java" markdown="1">
@@ -207,20 +188,11 @@ keyedStream
 </div>
 </div>
 
-The general recipe for building a custom window is to specify (1) a `WindowAssigner`, (2) a `Trigger` (optionally),
-and (3) an `Evictor` (optionally).
+构造一个定制的窗口通常需要指定：（1）一个窗口分配器（2）一个触发器（可选的）（3）一个驱逐器（可选的）
 
-The `WindowAssigner` defines how incoming elements are assigned to windows. A window is a logical group of elements
-that has a begin-value, and an end-value corresponding to a begin-time and end-time. Elements with timestamp (according
-to some notion of time described above within these values are part of the window).
+“窗口分配器”定义了进来的元素是如何被分配给一个窗口的。一个窗口就是一个元素的逻辑分组，有一个开始值、结束值，等同于一个开始时间和一个结束时间。带有时间戳的元素（根据上面描述的时间的概念，这些值属于窗口的一部分）。
 
-For example, the `SlidingEventTimeWindows`
-assigner in the code above defines a window of size 5 seconds, and a slide of 1 second. Assume that
-time starts from 0 and is measured in milliseconds. Then, we have 6 windows
-that overlap: [0,5000], [1000,6000], [2000,7000], [3000, 8000], [4000, 9000], and [5000, 10000]. Each incoming
-element is assigned to the windows according to its timestamp. For example, an element with timestamp 2000 will be
-assigned to the first three windows. Flink comes bundled with window assigners that cover the most common use cases. You can write your
-own window types by extending the `WindowAssigner` class.
+例如，SlidingEventTimeWindows 分配器定义了一个每秒钟滑动一次的，窗口大小是5秒钟。假设时间以毫秒为单位从0开始，那么我们有了6个重合的窗口：[0,5000], [1000,6000], [2000,7000], [3000, 8000], [4000, 9000], and [5000, 10000]. 每个即将到来的元素根据时间戳都被分配给了相应的窗口。例如，时间戳是2000的元素将被分配到前3个窗口中。Flink将窗口分配器打包，覆盖了最通用的案例。你可以通过扩展WindowAssigner类来编写自己的程序。
 
 <div class="codetabs" markdown="1">
 
@@ -228,18 +200,16 @@ own window types by extending the `WindowAssigner` class.
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th class="text-left" style="width: 25%">Transformation</th>
-      <th class="text-center">Description</th>
+      <th class="text-left" style="width: 25%">转换操作</th>
+      <th class="text-center">描述</th>
     </tr>
   </thead>
   <tbody>
       <tr>
-        <td><strong>Global window</strong><br>KeyedStream &rarr; WindowedStream</td>
+        <td><strong>全局窗口分配器</strong><br>KeyedStream &rarr; WindowedStream</td>
         <td>
           <p>
-	    All incoming elements of a given key are assigned to the same window.
-	    The window does not contain a default trigger, hence it will never be triggered
-	    if a trigger is not explicitly specified.
+	    相同的key下，所有的即将到来的元素都会被分配到同一个窗口。全局窗口不会包含默认的触发器，因此如果触发器没有明确指定，那么窗口永远不会被触发。
           </p>
     {% highlight java %}
 stream.window(GlobalWindows.create());
@@ -247,13 +217,10 @@ stream.window(GlobalWindows.create());
         </td>
       </tr>
       <tr>
-        <td><strong>Tumbling time windows</strong><br>KeyedStream &rarr; WindowedStream</td>
+        <td><strong>翻滚时间窗口分配器</strong><br>KeyedStream &rarr; WindowedStream</td>
         <td>
           <p>
-            Incoming elements are assigned to a window of a certain size (1 second below) based on
-            their timestamp. Windows do not overlap, i.e., each element is assigned to exactly one window.
-            This assigner comes with a default trigger that fires for a window when a
-            watermark with value higher than its end-value is received.
+            即将到来的元素都会基于自己的时间戳被分配给一个特定大小的窗口（例如下面例子中的1秒钟）。窗口没有重复部分，即每个元素被精确的分到一个窗口中。翻滚时间窗口分配器有一个默认的触发器，当水位线的值高于它最后接收到的值的时候，窗口会被触发。
           </p>
       {% highlight java %}
 stream.window(TumblingEventTimeWindows.of(Time.seconds(1)));
@@ -261,13 +228,10 @@ stream.window(TumblingEventTimeWindows.of(Time.seconds(1)));
         </td>
       </tr>
       <tr>
-        <td><strong>Sliding time windows</strong><br>KeyedStream &rarr; WindowedStream</td>
+        <td><strong>滑动时间窗口分配器</strong><br>KeyedStream &rarr; WindowedStream</td>
         <td>
           <p>
-            Incoming elements are assigned to a window of a certain size (5 seconds below) based on
-            their timestamp. Windows "slide" by the provided value (1 second in the example), and hence
-            overlap. This assigner comes with a default trigger that fires for a window when a
-	          watermark with value higher than its end-value is received.
+            即将到来的元素都会基于自己的时间戳被分配给一个特定大小的窗口（例如下面例子中的5秒钟）。窗口根据提供的值来滑动（例如例子中的1秒钟），因此窗口会有重合。滑动时间窗口分配器有一个默认的触发器，当水位线的值高于它最后接收到的值的时候，窗口会被触发。
           </p>
     {% highlight java %}
 stream.window(SlidingEventTimeWindows.of(Time.seconds(5), Time.seconds(1)));
@@ -275,13 +239,10 @@ stream.window(SlidingEventTimeWindows.of(Time.seconds(5), Time.seconds(1)));
         </td>
       </tr>
       <tr>
-          <td><strong>Tumbling processing time windows</strong><br>KeyedStream &rarr; WindowedStream</td>
+          <td><strong>翻滚系统时间分配器</strong><br>KeyedStream &rarr; WindowedStream</td>
           <td>
             <p>
-              Incoming elements are assigned to a window of a certain size (1 second below) based on
-              the current processing time. Windows do not overlap, i.e., each element is assigned to exactly one window.
-              This assigner comes with a default trigger that fires for a window a window when the current
-              processing time exceeds its end-value.
+              即将到来的元素根据当前的系统时间分配给一个特定大小的窗口（下面的1秒钟）。窗口没有重复部分，即每个元素被精确的分到一个窗口中。翻滚系统时间窗口分配器有一个默认的触发器，当水位线的值高于它最后接收到的值的时候，窗口会被触发。
             </p>
       {% highlight java %}
 stream.window(TumblingProcessingTimeWindows.of(Time.seconds(1)));
@@ -289,13 +250,10 @@ stream.window(TumblingProcessingTimeWindows.of(Time.seconds(1)));
           </td>
         </tr>
       <tr>
-        <td><strong>Sliding processing time windows</strong><br>KeyedStream &rarr; WindowedStream</td>
+        <td><strong>滑动系统时间分配器</strong><br>KeyedStream &rarr; WindowedStream</td>
         <td>
           <p>
-            Incoming elements are assigned to a window of a certain size (5 seconds below) based on
-            their timestamp. Windows "slide" by the provided value (1 second in the example), and hence
-            overlap. This assigner comes with a default trigger that fires for a window a window when the current
-            processing time exceeds its end-value.
+            即将到来的元素都会基于系统时间被分配给一个特定大小的窗口（例如下面例子中的5秒钟）。窗口根据提供的值来滑动（例如例子中的1秒钟），因此窗口会有重合。滑动时间窗口分配器有一个默认的触发器，当水位线的值高于它最后接收到的值的时候，窗口会被触发。
           </p>
     {% highlight java %}
 stream.window(SlidingProcessingTimeWindows.of(Time.seconds(5), Time.seconds(1)));
@@ -310,18 +268,16 @@ stream.window(SlidingProcessingTimeWindows.of(Time.seconds(5), Time.seconds(1)))
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th class="text-left" style="width: 25%">Transformation</th>
-      <th class="text-center">Description</th>
+      <th class="text-left" style="width: 25%">转换操作</th>
+      <th class="text-center">描述</th>
     </tr>
   </thead>
   <tbody>
       <tr>
-        <td><strong>Global window</strong><br>KeyedStream &rarr; WindowedStream</td>
+        <td><strong>全局窗口分配器</strong><br>KeyedStream &rarr; WindowedStream</td>
         <td>
           <p>
-            All incoming elements of a given key are assigned to the same window.
-	    The window does not contain a default trigger, hence it will never be triggered
-	    if a trigger is not explicitly specified.
+            相同的key下，所有的即将到来的元素都会被分配到同一个窗口。全局窗口不会包含默认的触发器，因此如果触发器没有明确指定，那么窗口永远不会被触发。
           </p>
     {% highlight scala %}
 stream.window(GlobalWindows.create)
@@ -329,13 +285,10 @@ stream.window(GlobalWindows.create)
         </td>
       </tr>
       <tr>
-          <td><strong>Tumbling time windows</strong><br>KeyedStream &rarr; WindowedStream</td>
+          <td><strong>翻滚时间窗口分配器</strong><br>KeyedStream &rarr; WindowedStream</td>
           <td>
             <p>
-             Incoming elements are assigned to a window of a certain size (1 second below) based on
-            their timestamp. Windows do not overlap, i.e., each element is assigned to exactly one window.
-            This assigner comes with a default trigger that fires for a window when a
-            watermark with value higher than its end-value is received.
+             即将到来的元素都会基于自己的时间戳被分配给一个特定大小的窗口（例如下面例子中的1秒钟）。窗口没有重复部分，即每个元素被精确的分到一个窗口中。翻滚时间窗口分配器有一个默认的触发器，当水位线的值高于它最后接收到的值的时候，窗口会被触发。
             </p>
       {% highlight scala %}
 stream.window(TumblingEventTimeWindows.of(Time.seconds(1)))
@@ -343,13 +296,10 @@ stream.window(TumblingEventTimeWindows.of(Time.seconds(1)))
           </td>
         </tr>
       <tr>
-        <td><strong>Sliding time windows</strong><br>KeyedStream &rarr; WindowedStream</td>
+        <td><strong>滑动时间窗口分配器</strong><br>KeyedStream &rarr; WindowedStream</td>
         <td>
           <p>
-            Incoming elements are assigned to a window of a certain size (5 seconds below) based on
-            their timestamp. Windows "slide" by the provided value (1 second in the example), and hence
-            overlap. This assigner comes with a default trigger that fires for a window when a
-            watermark with value higher than its end-value is received.
+            即将到来的元素都会基于自己的时间戳被分配给一个特定大小的窗口（例如下面例子中的5秒钟）。窗口根据提供的值来滑动（例如例子中的1秒钟），因此窗口会有重合。滑动时间窗口分配器有一个默认的触发器，当水位线的值高于它最后接收到的值的时候，窗口会被触发。
           </p>
     {% highlight scala %}
 stream.window(SlidingEventTimeWindows.of(Time.seconds(5), Time.seconds(1)))
@@ -357,13 +307,10 @@ stream.window(SlidingEventTimeWindows.of(Time.seconds(5), Time.seconds(1)))
         </td>
       </tr>
       <tr>
-          <td><strong>Tumbling processing time windows</strong><br>KeyedStream &rarr; WindowedStream</td>
+          <td><strong>翻滚系统时间分配器</strong><br>KeyedStream &rarr; WindowedStream</td>
           <td>
             <p>
-              Incoming elements are assigned to a window of a certain size (1 second below) based on
-              the current processing time. Windows do not overlap, i.e., each element is assigned to exactly one window.
-              This assigner comes with a default trigger that fires for a window a window when the current
-              processing time exceeds its end-value.
+              即将到来的元素根据当前的系统时间分配给一个特定大小的窗口（下面的1秒钟）。窗口没有重复部分，即每个元素被精确的分到一个窗口中。翻滚系统时间窗口分配器有一个默认的触发器，当水位线的值高于它最后接收到的值的时候，窗口会被触发。
 
             </p>
       {% highlight scala %}
@@ -372,13 +319,10 @@ stream.window(TumblingProcessingTimeWindows.of(Time.seconds(1)))
           </td>
         </tr>
       <tr>
-        <td><strong>Sliding processing time windows</strong><br>KeyedStream &rarr; WindowedStream</td>
+        <td><strong>滑动系统时间分配器</strong><br>KeyedStream &rarr; WindowedStream</td>
         <td>
           <p>
-            Incoming elements are assigned to a window of a certain size (5 seconds below) based on
-            their timestamp. Windows "slide" by the provided value (1 second in the example), and hence
-            overlap. This assigner comes with a default trigger that fires for a window a window when the current
-            processing time exceeds its end-value.
+            即将到来的元素都会基于系统时间被分配给一个特定大小的窗口（例如下面例子中的5秒钟）。窗口根据提供的值来滑动（例如例子中的1秒钟），因此窗口会有重合。滑动时间窗口分配器有一个默认的触发器，当水位线的值高于它最后接收到的值的时候，窗口会被触发。
           </p>
     {% highlight scala %}
 stream.window(SlidingProcessingTimeWindows.of(Time.seconds(5), Time.seconds(1)))
@@ -391,11 +335,7 @@ stream.window(SlidingProcessingTimeWindows.of(Time.seconds(5), Time.seconds(1)))
 
 </div>
 
-The `Trigger` specifies when the function that comes after the window clause (e.g., `sum`, `count`) is evaluated ("fires")
-for each window. If a trigger is not specified, a default trigger for each window type is used (that is part of the
-definition of the `WindowAssigner`). Flink comes bundled with a set of triggers if the ones that windows use by
-default do not fit the application. You can write your own trigger by implementing the `Trigger` interface. Note that
-specifying a trigger will override the default trigger of the window assigner.
+触发器为每个窗口指出了窗口语句之后的函数（例如sum、count）何时被计算（触发）。每个窗口可以键入一个默认的触发器（在定义WindowAssigner时作为其一部分来指出）。Flink打包了一些触发器，适用于窗口的默认触发器不能满足应用程序时使用。你可以继承Trigger接口实现自己的触发器。 注意，指定的触发器将会覆盖窗口分配器默认的触发器。
 
 <div class="codetabs" markdown="1">
 
@@ -403,17 +343,16 @@ specifying a trigger will override the default trigger of the window assigner.
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th class="text-left" style="width: 25%">Transformation</th>
-      <th class="text-center">Description</th>
+      <th class="text-left" style="width: 25%">转换操作</th>
+      <th class="text-center">描述</th>
     </tr>
   </thead>
   <tbody>
   <tr>
-    <td><strong>Processing time trigger</strong></td>
+    <td><strong>系统时间触发器</strong></td>
     <td>
       <p>
-        A window is fired when the current processing time exceeds its end-value.
-        The elements on the triggered window are henceforth discarded.
+        当前的系统时间超过了它的最后的值时，窗口会被触发。在触发窗口中的元素之后会被抛弃。
       </p>
 {% highlight java %}
 windowedStream.trigger(ProcessingTimeTrigger.create());
@@ -421,11 +360,10 @@ windowedStream.trigger(ProcessingTimeTrigger.create());
     </td>
   </tr>
   <tr>
-    <td><strong>Watermark trigger</strong></td>
+    <td><strong>水位线触发器</strong></td>
     <td>
       <p>
-        A window is fired when a watermark with value that exceeds the window's end-value has been received.
-        The elements on the triggered window are henceforth discarded.
+        当水位线的值超过了窗口接收到的最后的值时，窗口会被触发。在触发窗口中的元素之后会被抛弃。
       </p>
 {% highlight java %}
 windowedStream.trigger(EventTimeTrigger.create());
@@ -433,12 +371,10 @@ windowedStream.trigger(EventTimeTrigger.create());
     </td>
   </tr>
   <tr>
-    <td><strong>Continuous processing time trigger</strong></td>
+    <td><strong>连续系统时间触发器</strong></td>
     <td>
       <p>
-        A window is periodically considered for being fired (every 5 seconds in the example).
-        The window is actually fired only when the current processing time exceeds its end-value.
-        The elements on the triggered window are retained.
+        窗口被周期性的触发（例子中的5秒钟）。实际上窗口仅当当前时间超过它的最后的值时才被触发。在触发窗口中的元素会被保留。
       </p>
 {% highlight java %}
 windowedStream.trigger(ContinuousProcessingTimeTrigger.of(Time.seconds(5)));
@@ -446,12 +382,10 @@ windowedStream.trigger(ContinuousProcessingTimeTrigger.of(Time.seconds(5)));
     </td>
   </tr>
   <tr>
-    <td><strong>Continuous watermark time trigger</strong></td>
+    <td><strong>连续水位线触发器</strong></td>
     <td>
       <p>
-        A window is periodically considered for being fired (every 5 seconds in the example).
-        A window is actually fired when a watermark with value that exceeds the window's end-value has been received.
-        The elements on the triggered window are retained.
+        窗口被周期性的触发（例子中的5秒钟）。实际上窗口仅当水位线的时间超过它的最后的值时才被触发。在触发窗口中的元素会被保留。
       </p>
 {% highlight java %}
 windowedStream.trigger(ContinuousEventTimeTrigger.of(Time.seconds(5)));
@@ -459,11 +393,10 @@ windowedStream.trigger(ContinuousEventTimeTrigger.of(Time.seconds(5)));
     </td>
   </tr>
   <tr>
-    <td><strong>Count trigger</strong></td>
+    <td><strong>数量触发器</strong></td>
     <td>
       <p>
-        A window is fired when it has more than a certain number of elements (1000 below).
-        The elements of the triggered window are retained.
+        当多于一定数量时（例子中1000个）窗口被触发。在触发窗口中的元素会被保留。
       </p>
 {% highlight java %}
 windowedStream.trigger(CountTrigger.of(1000));
@@ -471,11 +404,10 @@ windowedStream.trigger(CountTrigger.of(1000));
     </td>
   </tr>
   <tr>
-    <td><strong>Purging trigger</strong></td>
+    <td><strong>清除触发器</strong></td>
     <td>
       <p>
-        Takes any trigger as an argument and forces the triggered window elements to be
-        "purged" (discarded) after triggering.
+        把触发器当做参数强迫触发窗口中的元素在触发后被清除（抛弃）。
       </p>
 {% highlight java %}
 windowedStream.trigger(PurgingTrigger.of(CountTrigger.of(1000)));
@@ -483,12 +415,10 @@ windowedStream.trigger(PurgingTrigger.of(CountTrigger.of(1000)));
     </td>
   </tr>
   <tr>
-    <td><strong>Delta trigger</strong></td>
+    <td><strong>增量触发器</strong></td>
     <td>
       <p>
-        A window is periodically considered for being fired (every 5000 milliseconds in the example).
-        A window is actually fired when the value of the last added element exceeds the value of
-        the first element inserted in the window according to a `DeltaFunction`.
+        窗口被周期性的触发（例子中的5000毫秒）。实际上窗口被触发的条件是根据“增量函数”，当最后添加的元素超过了第一个添加的元素时会被触发。
       </p>
 {% highlight java %}
 windowedStream.trigger(new DeltaTrigger.of(5000.0, new DeltaFunction<Double>() {
@@ -509,17 +439,16 @@ windowedStream.trigger(new DeltaTrigger.of(5000.0, new DeltaFunction<Double>() {
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th class="text-left" style="width: 25%">Transformation</th>
-      <th class="text-center">Description</th>
+      <th class="text-left" style="width: 25%">转换操作</th>
+      <th class="text-center">描述</th>
     </tr>
   </thead>
   <tbody>
   <tr>
-    <td><strong>Processing time trigger</strong></td>
+    <td><strong>系统时间触发器</strong></td>
     <td>
       <p>
-        A window is fired when the current processing time exceeds its end-value.
-        The elements on the triggered window are henceforth discarded.
+        当当前的系统时间超过了它的最后的值时，窗口会被触发。在触发窗口中的元素之后会被抛弃。
       </p>
 {% highlight scala %}
 windowedStream.trigger(ProcessingTimeTrigger.create);
@@ -527,11 +456,10 @@ windowedStream.trigger(ProcessingTimeTrigger.create);
     </td>
   </tr>
   <tr>
-    <td><strong>Watermark trigger</strong></td>
+    <td><strong>水位线触发器</strong></td>
     <td>
       <p>
-        A window is fired when a watermark with value that exceeds the window's end-value has been received.
-        The elements on the triggered window are henceforth discarded.
+        当水位线的值超过了窗口接收到的最后的值时，窗口会被触发。在触发窗口中的元素之后会被抛弃。
       </p>
 {% highlight scala %}
 windowedStream.trigger(EventTimeTrigger.create);
@@ -539,12 +467,10 @@ windowedStream.trigger(EventTimeTrigger.create);
     </td>
   </tr>
   <tr>
-    <td><strong>Continuous processing time trigger</strong></td>
+    <td><strong>连续系统时间触发器</strong></td>
     <td>
       <p>
-        A window is periodically considered for being fired (every 5 seconds in the example).
-        The window is actually fired only when the current processing time exceeds its end-value.
-        The elements on the triggered window are retained.
+        窗口被周期性的触发（例子中的5秒钟）。实际上窗口仅当当前时间超过它的最后的值时才被触发。在触发窗口中的元素会被保留。
       </p>
 {% highlight scala %}
 windowedStream.trigger(ContinuousProcessingTimeTrigger.of(Time.seconds(5)));
@@ -552,12 +478,10 @@ windowedStream.trigger(ContinuousProcessingTimeTrigger.of(Time.seconds(5)));
     </td>
   </tr>
   <tr>
-    <td><strong>Continuous watermark time trigger</strong></td>
+    <td><strong>连续水位线触发器</strong></td>
     <td>
       <p>
-        A window is periodically considered for being fired (every 5 seconds in the example).
-        A window is actually fired when a watermark with value that exceeds the window's end-value has been received.
-        The elements on the triggered window are retained.
+        窗口被周期性的触发（例子中的5秒钟）。实际上窗口仅当水位线的时间超过它的最后的值时才被触发。在触发窗口中的元素会被保留。
       </p>
 {% highlight scala %}
 windowedStream.trigger(ContinuousEventTimeTrigger.of(Time.seconds(5)));
@@ -565,11 +489,10 @@ windowedStream.trigger(ContinuousEventTimeTrigger.of(Time.seconds(5)));
     </td>
   </tr>
   <tr>
-    <td><strong>Count trigger</strong></td>
+    <td><strong>数量触发器</strong></td>
     <td>
       <p>
-        A window is fired when it has more than a certain number of elements (1000 below).
-        The elements of the triggered window are retained.
+        当多于一定数量时（例子中1000个）窗口被触发。在触发窗口中的元素会被保留。
       </p>
 {% highlight scala %}
 windowedStream.trigger(CountTrigger.of(1000));
@@ -577,11 +500,10 @@ windowedStream.trigger(CountTrigger.of(1000));
     </td>
   </tr>
   <tr>
-    <td><strong>Purging trigger</strong></td>
+    <td><strong>清除触发器</strong></td>
     <td>
       <p>
-        Takes any trigger as an argument and forces the triggered window elements to be
-        "purged" (discarded) after triggering.
+        把触发器当做参数强迫触发窗口中的元素在触发后被清除（抛弃）。
       </p>
 {% highlight scala %}
 windowedStream.trigger(PurgingTrigger.of(CountTrigger.of(1000)));
@@ -589,12 +511,10 @@ windowedStream.trigger(PurgingTrigger.of(CountTrigger.of(1000)));
     </td>
   </tr>
   <tr>
-    <td><strong>Delta trigger</strong></td>
+    <td><strong>增量触发器</strong></td>
     <td>
       <p>
-        A window is periodically considered for being fired (every 5000 milliseconds in the example).
-        A window is actually fired when the value of the last added element exceeds the value of
-        the first element inserted in the window according to a `DeltaFunction`.
+        窗口被周期性的触发（例子中的5000毫秒）。实际上窗口被触发的条件是根据“增量函数”，当最后添加的元素超过了第一个添加的元素时会被触发。
       </p>
 {% highlight scala %}
 windowedStream.trigger(DeltaTrigger.of(5000.0, { (old,new) => new - old > 0.01 }))
@@ -607,10 +527,7 @@ windowedStream.trigger(DeltaTrigger.of(5000.0, { (old,new) => new - old > 0.01 }
 
 </div>
 
-After the trigger fires, and before the function (e.g., `sum`, `count`) is applied to the window contents, an
-optional `Evictor` removes some elements from the beginning of the window before the remaining elements
-are passed on to the function. Flink comes bundled with a set of evictors You can write your own evictor by
-implementing the `Evictor` interface.
+在触发器被触发之后，在函数被应用之前，一个可选的Evictor（驱逐器）会从开始的窗口中移除一部分元素。Flink打包了一些驱逐器，你可以通过集成Evictor接口来编写程序。
 
 <div class="codetabs" markdown="1">
 
@@ -618,17 +535,16 @@ implementing the `Evictor` interface.
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th class="text-left" style="width: 25%">Transformation</th>
-      <th class="text-center">Description</th>
+      <th class="text-left" style="width: 25%">转换操作</th>
+      <th class="text-center">描述</th>
     </tr>
   </thead>
   <tbody>
   <tr>
-      <td><strong>Time evictor</strong></td>
+      <td><strong>时间驱逐器</strong></td>
       <td>
         <p>
-         Evict all elements from the beginning of the window, so that elements from end-value - 1 second
-         until end-value are retained (the resulting window size is 1 second).
+         驱逐从窗口开始时的元素，以便从窗口最后的元素-1秒到窗口最后的元素的时间范围内被保留（窗口保留的大小是1秒）
         </p>
   {% highlight java %}
 triggeredStream.evictor(TimeEvictor.of(Time.seconds(1)));
@@ -636,10 +552,10 @@ triggeredStream.evictor(TimeEvictor.of(Time.seconds(1)));
       </td>
     </tr>
    <tr>
-       <td><strong>Count evictor</strong></td>
+       <td><strong>数量驱逐器</strong></td>
        <td>
          <p>
-          Retain 1000 elements from the end of the window backwards, evicting all others.
+          窗口从后往前推，保留1000个元素。
          </p>
    {% highlight java %}
 triggeredStream.evictor(CountEvictor.of(1000));
@@ -647,12 +563,10 @@ triggeredStream.evictor(CountEvictor.of(1000));
        </td>
      </tr>
     <tr>
-        <td><strong>Delta evictor</strong></td>
+        <td><strong>增量驱逐器</strong></td>
         <td>
           <p>
-            Starting from the beginning of the window, evict elements until an element with
-            value lower than the value of the last element is found (by a threshold and a
-            DeltaFunction).
+            从窗口起始部分开始，驱逐元素，直到有元素低于最后一个元素的值时。（通过一个临界值和一个增量函数）
           </p>
     {% highlight java %}
 triggeredStream.evictor(DeltaEvictor.of(5000, new DeltaFunction<Double>() {
@@ -671,17 +585,16 @@ triggeredStream.evictor(DeltaEvictor.of(5000, new DeltaFunction<Double>() {
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th class="text-left" style="width: 25%">Transformation</th>
-      <th class="text-center">Description</th>
+      <th class="text-left" style="width: 25%">转换操作</th>
+      <th class="text-center">描述</th>
     </tr>
   </thead>
   <tbody>
   <tr>
-      <td><strong>Time evictor</strong></td>
+      <td><strong>时间驱逐器</strong></td>
       <td>
         <p>
-         Evict all elements from the beginning of the window, so that elements from end-value - 1 second
-         until end-value are retained (the resulting window size is 1 second).
+         驱逐从窗口开始时的元素，以便从窗口最后的元素-1秒到窗口最后的元素的时间范围内被保留（窗口保留的大小是1秒）
         </p>
   {% highlight scala %}
 triggeredStream.evictor(TimeEvictor.of(Time.seconds(1)));
@@ -689,10 +602,10 @@ triggeredStream.evictor(TimeEvictor.of(Time.seconds(1)));
       </td>
     </tr>
    <tr>
-       <td><strong>Count evictor</strong></td>
+       <td><strong>数量驱逐器</strong></td>
        <td>
          <p>
-          Retain 1000 elements from the end of the window backwards, evicting all others.
+          窗口从后往前推，保留1000个元素。
          </p>
    {% highlight scala %}
 triggeredStream.evictor(CountEvictor.of(1000));
@@ -700,12 +613,10 @@ triggeredStream.evictor(CountEvictor.of(1000));
        </td>
      </tr>
     <tr>
-        <td><strong>Delta evictor</strong></td>
+        <td><strong>增量驱逐器</strong></td>
         <td>
           <p>
-            Starting from the beginning of the window, evict elements until an element with
-            value lower than the value of the last element is found (by a threshold and a
-            DeltaFunction).
+            从窗口起始部分开始，驱逐元素，直到有元素低于最后一个元素的值时。（通过一个临界值和一个增量函数）
           </p>
     {% highlight scala %}
 windowedStream.evictor(DeltaEvictor.of(5000.0, { (old,new) => new - old > 0.01 }))
@@ -718,24 +629,21 @@ windowedStream.evictor(DeltaEvictor.of(5000.0, { (old,new) => new - old > 0.01 }
 
 </div>
 
-### Recipes for Building Windows
+### 构建窗口的方法
 
-The mechanism of window assigner, trigger, and evictor is very powerful, and it allows you to define
-many different kinds of windows. Flink's basic window constructs are, in fact, syntactic
-sugar on top of the general mechanism. Below is how some common types of windows can be
-constructed using the general mechanism
+窗口分配器、触发器、驱逐器的机制是非常强大的，而且它允许你定义许多不同类型的窗口。事实上，Flink的基本窗口构造就是通常机制上的语法糖。下面是使用通用机制的窗口的一般构造方法。
 
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th class="text-left" style="width: 35%">Window type</th>
-      <th class="text-center">Definition</th>
+      <th class="text-left" style="width: 35%">窗口类型</th>
+      <th class="text-center">描述</th>
     </tr>
   </thead>
   <tbody>
       <tr>
         <td>
-	  <strong>Tumbling count window</strong><br>
+	  <strong>基于数量的翻滚窗口</strong><br>
     {% highlight java %}
 stream.countWindow(1000)
     {% endhighlight %}
@@ -749,7 +657,7 @@ stream.window(GlobalWindows.create())
       </tr>
       <tr>
         <td>
-	  <strong>Sliding count window</strong><br>
+	  <strong>基于数量的滑动窗口</strong><br>
     {% highlight java %}
 stream.countWindow(1000, 100)
     {% endhighlight %}
@@ -764,7 +672,7 @@ stream.window(GlobalWindows.create())
       </tr>
       <tr>
         <td>
-	  <strong>Tumbling event time window</strong><br>
+	  <strong>基于事件时间的翻滚窗口</strong><br>
     {% highlight java %}
 stream.timeWindow(Time.seconds(5))
     {% endhighlight %}
@@ -778,7 +686,7 @@ stream.window(TumblingEventTimeWindows.of((Time.seconds(5)))
       </tr>
       <tr>
         <td>
-	  <strong>Sliding event time window</strong><br>
+	  <strong>基于事件时间的滑动窗口</strong><br>
     {% highlight java %}
 stream.timeWindow(Time.seconds(5), Time.seconds(1))
     {% endhighlight %}
@@ -792,7 +700,7 @@ stream.window(SlidingEventTimeWindows.of(Time.seconds(5), Time.seconds(1)))
       </tr>
       <tr>
         <td>
-	  <strong>Tumbling processing time window</strong><br>
+	  <strong>基于系统时间的翻滚窗口</strong><br>
     {% highlight java %}
 stream.timeWindow(Time.seconds(5))
     {% endhighlight %}
@@ -806,7 +714,7 @@ stream.window(TumblingProcessingTimeWindows.of((Time.seconds(5)))
       </tr>
       <tr>
         <td>
-	  <strong>Sliding processing time window</strong><br>
+	  <strong>基于系统时间的的滑动窗口</strong><br>
     {% highlight java %}
 stream.timeWindow(Time.seconds(5), Time.seconds(1))
     {% endhighlight %}
@@ -822,12 +730,9 @@ stream.window(SlidingProcessingTimeWindows.of(Time.seconds(5), Time.seconds(1)))
 </table>
 
 
-## Windows on Unkeyed Data Streams
+## 在非keyed数据流上的窗口操作
 
-You can also define windows on regular (non-keyed) data streams using the `windowAll` transformation. These
-windowed data streams have all the capabilities of keyed windowed data streams, but are evaluated at a single
-task (and hence at a single computing node). The syntax for defining triggers and evictors is exactly the
-same:
+你同样可以通过使用WindowALL转换操作在普通的（非keyed）数据流上定义窗口。这些窗口化了的数据流与keyed窗口中的数据流有相同的处理能力，但却是在一个单独的任务（因此是单节点的计算）中被计算。定义触发器、驱逐器的语法完全一样：
 
 <div class="codetabs" markdown="1">
 <div data-lang="java" markdown="1">
@@ -849,7 +754,7 @@ nonKeyedStream
 </div>
 </div>
 
-Basic window definitions are also available for windows on non-keyed streams:
+非keyed流的窗口定义同样在基本的窗口中可用：
 
 <div class="codetabs" markdown="1">
 <div data-lang="java" markdown="1">
@@ -859,18 +764,17 @@ Basic window definitions are also available for windows on non-keyed streams:
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th class="text-left" style="width: 25%">Transformation</th>
-      <th class="text-center">Description</th>
+      <th class="text-left" style="width: 25%">转换操作</th>
+      <th class="text-center">描述</th>
     </tr>
   </thead>
   <tbody>
       <tr>
-        <td><strong>Tumbling time window all</strong><br>DataStream &rarr; WindowedStream</td>
+        <td><strong>Window all的翻滚时间</strong><br>DataStream &rarr; WindowedStream</td>
         <td>
           <p>
-          Defines a window of 5 seconds, that "tumbles". This means that elements are
-          grouped according to their timestamp in groups of 5 second duration, and every element belongs to exactly one window.
-          The notion of time used is controlled by the StreamExecutionEnvironment.
+          定义了一个5秒钟的翻滚窗口。这意味着元素根据时间戳，以5秒钟的间隔被分组，每个元素精确的属于一个窗口。
+          时间的概念在StreamExecutionEnvironment中指定。
     {% highlight java %}
 nonKeyedStream.timeWindowAll(Time.seconds(5));
     {% endhighlight %}
@@ -878,13 +782,10 @@ nonKeyedStream.timeWindowAll(Time.seconds(5));
         </td>
       </tr>
       <tr>
-          <td><strong>Sliding time window all</strong><br>DataStream &rarr; WindowedStream</td>
+          <td><strong>Window all的滑动时间</strong><br>DataStream &rarr; WindowedStream</td>
           <td>
             <p>
-             Defines a window of 5 seconds, that "slides" by 1 seconds. This means that elements are
-             grouped according to their timestamp in groups of 5 second duration, and elements can belong to more than
-             one window (since windows overlap by at least 4 seconds)
-             The notion of time used is controlled by the StreamExecutionEnvironment.
+             定义了一个5秒钟的窗口，每秒钟滑动一次。这意味着元素根据时间戳，以5秒钟的间隔被分组，元素可以属于多个窗口（因为窗口最少重合4秒）。时间的概念在StreamExecutionEnvironment中指定。
       {% highlight java %}
 nonKeyedStream.timeWindowAll(Time.seconds(5), Time.seconds(1));
       {% endhighlight %}
@@ -892,12 +793,10 @@ nonKeyedStream.timeWindowAll(Time.seconds(5), Time.seconds(1));
           </td>
         </tr>
       <tr>
-        <td><strong>Tumbling count window all</strong><br>DataStream &rarr; WindowedStream</td>
+        <td><strong>Window all的翻滚数量</strong><br>DataStream &rarr; WindowedStream</td>
         <td>
           <p>
-          Defines a window of 1000 elements, that "tumbles". This means that elements are
-          grouped according to their arrival time (equivalent to processing time) in groups of 1000 elements,
-          and every element belongs to exactly one window.
+          定义一个1000个元素的翻滚窗口。这意味着窗口以1000个元素分组，每个元素属于一个窗口。
     {% highlight java %}
 nonKeyedStream.countWindowAll(1000)
     {% endhighlight %}
@@ -905,12 +804,10 @@ nonKeyedStream.countWindowAll(1000)
         </td>
       </tr>
       <tr>
-      <td><strong>Sliding count window all</strong><br>DataStream &rarr; WindowedStream</td>
+      <td><strong>Window all的滑动数量</strong><br>DataStream &rarr; WindowedStream</td>
       <td>
         <p>
-          Defines a window of 1000 elements, that "slides" every 100 elements. This means that elements are
-          grouped according to their arrival time (equivalent to processing time) in groups of 1000 elements,
-          and every element can belong to more than one window (as windows overlap by at least 900 elements).
+          定义一个1000个元素的窗口，每100个元素滑动一次。这意味着以1000个元素分组，每个元素可以属于多个窗口（因为至少900个元素重合）。
   {% highlight java %}
 nonKeyedStream.countWindowAll(1000, 100)
   {% endhighlight %}
@@ -929,18 +826,17 @@ nonKeyedStream.countWindowAll(1000, 100)
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th class="text-left" style="width: 25%">Transformation</th>
-      <th class="text-center">Description</th>
+      <th class="text-left" style="width: 25%">转换操作</th>
+      <th class="text-center">描述</th>
     </tr>
   </thead>
   <tbody>
       <tr>
-        <td><strong>Tumbling time window all</strong><br>DataStream &rarr; WindowedStream</td>
+        <td><strong>Window all的翻滚时间</strong><br>DataStream &rarr; WindowedStream</td>
         <td>
           <p>
-          Defines a window of 5 seconds, that "tumbles". This means that elements are
-          grouped according to their timestamp in groups of 5 second duration, and every element belongs to exactly one window.
-          The notion of time used is controlled by the StreamExecutionEnvironment.
+          定义了一个5秒钟的翻滚窗口。这意味着元素根据时间戳，以5秒钟的间隔被分组，每个元素精确的属于一个窗口。
+          时间的概念在StreamExecutionEnvironment中指定。
     {% highlight scala %}
 nonKeyedStream.timeWindowAll(Time.seconds(5));
     {% endhighlight %}
@@ -948,13 +844,11 @@ nonKeyedStream.timeWindowAll(Time.seconds(5));
         </td>
       </tr>
       <tr>
-          <td><strong>Sliding time window all</strong><br>DataStream &rarr; WindowedStream</td>
+          <td><strong>Window all的滑动时间</strong><br>DataStream &rarr; WindowedStream</td>
           <td>
             <p>
-             Defines a window of 5 seconds, that "slides" by 1 seconds. This means that elements are
-             grouped according to their timestamp in groups of 5 second duration, and elements can belong to more than
-             one window (since windows overlap by at least 4 seconds)
-             The notion of time used is controlled by the StreamExecutionEnvironment.
+             定义了一个5秒钟的窗口，每秒钟滑动一次。这意味着元素根据时间戳，以5秒钟的间隔被分组，元素可以属于多个窗口（因为窗口最少重合4秒）。
+             时间的概念在StreamExecutionEnvironment中指定。
       {% highlight scala %}
 nonKeyedStream.timeWindowAll(Time.seconds(5), Time.seconds(1));
       {% endhighlight %}
@@ -962,12 +856,10 @@ nonKeyedStream.timeWindowAll(Time.seconds(5), Time.seconds(1));
           </td>
         </tr>
       <tr>
-        <td><strong>Tumbling count window all</strong><br>DataStream &rarr; WindowedStream</td>
+        <td><strong>Window all的翻滚数量</strong><br>DataStream &rarr; WindowedStream</td>
         <td>
           <p>
-          Defines a window of 1000 elements, that "tumbles". This means that elements are
-          grouped according to their arrival time (equivalent to processing time) in groups of 1000 elements,
-          and every element belongs to exactly one window.
+          定义一个1000个元素的翻滚窗口。这意味着窗口以1000个元素分组，每个元素属于一个窗口。
     {% highlight scala %}
 nonKeyedStream.countWindowAll(1000)
     {% endhighlight %}
@@ -975,12 +867,10 @@ nonKeyedStream.countWindowAll(1000)
         </td>
       </tr>
       <tr>
-      <td><strong>Sliding count window all</strong><br>DataStream &rarr; WindowedStream</td>
+      <td><strong>Window all的滑动数量</strong><br>DataStream &rarr; WindowedStream</td>
       <td>
         <p>
-          Defines a window of 1000 elements, that "slides" every 100 elements. This means that elements are
-          grouped according to their arrival time (equivalent to processing time) in groups of 1000 elements,
-          and every element can belong to more than one window (as windows overlap by at least 900 elements).
+          定义一个1000个元素的窗口，每100个元素滑动一次。这意味着以1000个元素分组，每个元素可以属于多个窗口（因为至少900个元素重合）。
   {% highlight scala %}
 nonKeyedStream.countWindowAll(1000, 100)
   {% endhighlight %}
